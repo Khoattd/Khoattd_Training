@@ -45,4 +45,15 @@ CÚ PHÁP THÔNG THƯỜNG: VD $("div:animated")
 + :lang(language) lọc theo ngôn ngữ
 + :not(selector) lọc ra những thằng ko match cái selector vd: $("#div2 input:not([type='text'])")
 
-
+-CHILD FILTER
++ :first-child tất cả những thằng là con cả
++ :last-child lọc ra những thằng là con út. tính luôn cháu chắt chit nếu trước : rỗng
++ :first-of-type lọc ra những thằng con đầu tiên của loại nó. Cháu ngoại cũng tính nếu trước : rỗng
++ :last-of-type . ngược với first-of-type
++ :nth-child(index/even/odd/equation)  tìm trong những thằng matched trước đó những thằng thỏa yêu cầu con.
+SỐ THỨ TỰ ĐỂ TÍNH CON LÀ SỐ THỨ TỰ CỦA NÓ KHI CHƯA LỌC TRONG THẰNG CHA.
+ vd: tìm input là con thứ 2  trong tất cả các div: $("div input:nth-child(2)"): những thằng input là con cả 
+ sẽ ko đc chọn .1 INDEXED
++ :nth-last-child(index/even/odd/equation) giống nth-child nhưng từ đếm ngược lên
++ :nth-last-of-type(index/even/odd/equation): giống nth-child nhưng chỉ tính type của nó
++: nth-of-type(): tương tự như last-of-type nhưng từ trên xuống
