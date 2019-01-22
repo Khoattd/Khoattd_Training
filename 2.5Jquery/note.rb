@@ -19,5 +19,14 @@ Selectors:
 ".a .b" cái class b trong cái class a 
 ".a, .b" có class a hoặc b
 
-+attribute:
+-Attribute
 valid identifier:  " '' "; ' "" '; " \"\" "; ' \' \' '
+cú pháp thông thường :$( "[attribute *type* 'value']" ) vd $( "a[hreflang|='en']" )
++ chứa or theo sau bằng -: |=
++ chứa chuỗi substring trong value: *=   //chỉ cần chứa vd 'man' found: milkman
++ chứa word: ~=  // chưa từ riêng biệt: vd 'man' found: milk man 
++ kết thúc giống với: $= // vd 'letter' found: newsletters
++ Có attribute nhưng ko phải hoặc ko có attribute: !=
++ Start with: ^= vs 'news' found newsletters
++ [Attribute]: có attribute
++ Multiple Attribute: ( "[1][2][N]" ): phải có tất cả 1 tới N ms select
