@@ -12,8 +12,8 @@ PHÂN BIỆT EACH VS MAP
 
 
 
-----------------------------------------------------
-Selectors:
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SELECTOR
 +Basic:
 ".a.b" có cả a và b 
 ".a .b" cái class b trong cái class a 
@@ -44,7 +44,7 @@ CÚ PHÁP THÔNG THƯỜNG: VD $("div:animated")
 + :header lọc ra những thằng là h1, h2 ...  (jquery extension cải thiện = .filter(":header"))
 + :lang(language) lọc theo ngôn ngữ
 + :not(selector) lọc ra những thằng ko match cái selector vd: $("#div2 input:not([type='text'])")
-
+----------------------------------------------------------------------------------------------------------------
 -CHILD FILTER
 + :first-child tất cả những thằng là con cả
 + :last-child lọc ra những thằng là con út. tính luôn cháu chắt chit nếu trước : rỗng
@@ -59,3 +59,12 @@ SỐ THỨ TỰ ĐỂ TÍNH CON LÀ SỐ THỨ TỰ CỦA NÓ KHI CHƯA LỌC TR
 + :nth-of-type(): tương tự như last-of-type nhưng từ trên xuống
 + :only-child thằng là con 1
 + :only-of-type thằng là duy nhất trong cha nó
+-----------------------------------------------------------------------------------------
+CONTENT FILTER
++ :contain(text) tìm thằng trong nội dung có text. CASE SENSITIVE
++ :empty tìm tất cả những thằng không có con
++ :has(selector) tìm những thằng thỏa yêu cầu của selector (jquery extension thay bằng $(selector).has(selector))
+vd: $("div").has("p:contains('haha')")
++ :parent tìm những thằng có con (jquery extension xài .filter(":parent"))
+-----------------------------------------------------------------------------------------
+FORM
