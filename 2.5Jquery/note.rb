@@ -101,8 +101,22 @@ vd: $( "li" ).filter( ":even" )
 vd2: $( "li" )
   .filter(function( index ) {return $( "strong", this ).length === 1;})
     .css( "background-color", "red" );   tìm những thằng li có 1 strong 
-+ .first()
++ .first() / .last() lọc lại matched set còn thằng đầu tiên / cuối cùng 
 + .has(selector/contained)
 + .is(selector/function/selection/elements) (return true) thằng này ko tạo jquery object mới,
 chỉ giúp check object hiện tại hỏa điều kiện hay ko 
++ .map( callback) cho mỗi thằng trong matched set vào function, return 1 jquery objec mới
++ .not(selector/function/selection) lọc những thằng không mathced yêu cầu, thằng nào không matched thì được chọn
++ .slice(start [,end]) cắt matched set thành đoạn, có thể  xài số âm 
+---------------------------------------------------------------------------------------------------------
+DOM manipulation methods
++ .addClass("classname"/fucntion) /.removeClass : thêm hhoặc bỏ class, thêm nhiều class cùng lúc được 
+có chấp nhận method : 
+vd: $( "ul li" ).addClass(function( index ) {
+    return "item-" + index;
+  });
 
++ .hasClass("classname") check trong matched set có class name ko. return boolean 
++ .toggleCLass
+----------------------------------------------
++ .clone
