@@ -56,4 +56,6 @@ SỐ THỨ TỰ ĐỂ TÍNH CON LÀ SỐ THỨ TỰ CỦA NÓ KHI CHƯA LỌC TR
  sẽ ko đc chọn .1 INDEXED
 + :nth-last-child(index/even/odd/equation) giống nth-child nhưng từ đếm ngược lên
 + :nth-last-of-type(index/even/odd/equation): giống nth-child nhưng chỉ tính type của nó
-+: nth-of-type(): tương tự như last-of-type nhưng từ trên xuống
++ :nth-of-type(): tương tự như last-of-type nhưng từ trên xuống
++ :only-child thằng là con 1
++ :only-of-type thằng là duy nhất trong cha nó
