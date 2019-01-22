@@ -8,3 +8,12 @@ có jquevy validation thì server sẽ phải trả về, tốn tài nguyên). J
 sẽ check legit r ms gửi
 
 PHÂN BIỆT EACH VS MAP 
+
+
+
+----------------------------------------------------
+Selectors:
++Basic:
+".a.b" có cả a và b 
+".a .b" cái class b trong cái class a 
+".a, .b" có class a hoặc b
