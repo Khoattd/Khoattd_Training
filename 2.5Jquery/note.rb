@@ -82,3 +82,10 @@ FORM
 + :selected không hoạt động với checkbox + radio  (jquery extension xài .filter(":selected"))
 + :submit (jquery extension xài input[type="submit"], button[type="submit"])
 + :text tìm những thằng có type là text (jquery extension xài [type="text"])
+---------------------------------------------------------------------------------------------
+HIERACHY
++ $("parent > child") tìm những thằng child có cha là parent vd $("ul.topnav > li") tìm những thằng li có cha là ul
+không tính cháu chắt chít
++ $("ancestor descendant") giống như cái > nhưng tính cả cháu chắt chít
++ $("prev + next") tìm những thằng next là anh em NGAY SAU prev
++ $("prev ~ sibling") tìm trong tất cả các anh em có thằng prev
