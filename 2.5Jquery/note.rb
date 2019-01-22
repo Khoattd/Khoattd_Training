@@ -68,3 +68,17 @@ vd: $("div").has("p:contains('haha')")
 + :parent tìm những thằng có con (jquery extension xài .filter(":parent"))
 -----------------------------------------------------------------------------------------
 FORM
++ :button tìm những thằng button và những thằng type là button  (jquery extension xài .filter(":button"))
++ :checkbox tìm những thằng type là textbox (jquery extension xài [type="checkbox"])
++ :checked
++ :disabled, :enabled
++ :file tìm những thằng có type là file (jquery extension xài [type="file"])
++ :focus
++ :image (jquery extension xài [type="image"])
++ :input (jquery extension xài .filter(":input"))
++ :password (jquery extension xài [type="password"])                    document.querySelectorAll()
++ :radio (jquery extension xài [type="radio"])
++ :reset(jquery extension xài [type="reset"]) 
++ :selected không hoạt động với checkbox + radio  (jquery extension xài .filter(":selected"))
++ :submit (jquery extension xài input[type="submit"], button[type="submit"])
++ :text tìm những thằng có type là text (jquery extension xài [type="text"])
