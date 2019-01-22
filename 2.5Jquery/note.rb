@@ -30,3 +30,19 @@ cú pháp thông thường :$( "[attribute *type* 'value']" ) vd $( "a[hreflang|
 + Start with: ^= vs 'news' found newsletters
 + [Attribute]: có attribute
 + Multiple Attribute: ( "[1][2][N]" ): phải có tất cả 1 tới N ms select
+---------------------------------------------------------------------------------------------
+FILTER 
+-BASIC FILTER
+CÚ PHÁP THÔNG THƯỜNG: VD $("div:animated")
++ :animated select thằng nào đang có animation 
++ :eq(index) lựa thằng thứ index trong đống matched trc đó (zero indexed) vd: $("#div2 input:eq(2)")
++ :even/:odd lựa những thằng có index chẵn/lẻ trong matched $("#div2 input:even")
++ :first thằng đầu tiên trong đống matched  (tương đương :ed(0)) (jquery extension cải thiện = .filter(":first"))
++ :focus thằng đang có focus trong đống matched
++ :gt(index) những thằng có stt lớn hơn index trong đống matched (jquery extension thay = $(" ").slice(index))
++ :lt(index) ngược với gt (jquery extension thay = $(" ").slice(0, index) )
++ :header lọc ra những thằng là h1, h2 ...  (jquery extension cải thiện = .filter(":header"))
++ :lang(language) lọc theo ngôn ngữ
++ :not(selector) lọc ra những thằng ko match cái selector vd: $("#div2 input:not([type='text'])")
+
+
