@@ -89,3 +89,20 @@ không tính cháu chắt chít
 + $("ancestor descendant") giống như cái > nhưng tính cả cháu chắt chít
 + $("prev + next") tìm những thằng next là anh em NGAY SAU prev
 + $("prev ~ sibling") tìm trong tất cả các anh em có thằng prev
+
+TRAVERSING FILTER VS FILTER
+vd: $("div").eq(2) vs $("div:eq(2)")
+traversing filter làm lần lượt. bước selector trước sau đó filter eq 
+:eq(2) filter trực tiếp 
+
++ .eq()
++ .filter(selector/function/elements/selection) giảm matched set thêm 1 lần nữa. Function trả về boolean
+vd: $( "li" ).filter( ":even" )
+vd2: $( "li" )
+  .filter(function( index ) {return $( "strong", this ).length === 1;})
+    .css( "background-color", "red" );   tìm những thằng li có 1 strong 
++ .first()
++ .has(selector/contained)
++ .is(selector/function/selection/elements) (return true) thằng này ko tạo jquery object mới,
+chỉ giúp check object hiện tại hỏa điều kiện hay ko 
+
