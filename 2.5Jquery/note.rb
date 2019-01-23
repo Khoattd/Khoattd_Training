@@ -185,5 +185,31 @@ GENERAL ATTRIBUTE
 + .prop() trả về property value của THẰNG ĐẦU TIÊN 
 + .removeAttr("attribute name") xóa attribute khỏi TỪNG thằng trong matched set
 + .remmoveProp() tương tự removeAttr
-+ .val() lấy element value của thằng đầu tiên trong set
- 
++ .val() lấy element value của thằng đầu tiên trong set. 
+-------------------------------------------------------------------------------
++ .css("propertyName"/"propertyName", "value") lấy/set computed style properties của thằng đầu tiên trong matched set
++ .height() trả lại chiều cao ko kèm theo "px" trong khi css("height") trả lại 400px 
+  .height(value/fucntion)
+  .width()
++ .innerHeight(_blank/value/functions) lấy/set padding + height của first element (ko có px)
+  .innerWidth() 
++ .offset() lấy tọa độ của first element theo document trả về object chứa top và left
++.outerHeight(_blank/true/value) lấy /set height ( tính luôn border or margin)
+ .outerWidth()
++ .position() lấy vị trí của first element theo parent của nó
++ .scrollLeft()/scrollTop() lấy/set vị trí của scroll bar
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+METHOD 
++ .each(function) 
+vd:  $( "div" ).each(function( i ) {
+  if ( this.style.color !== "blue" ) {
+    this.style.color = "blue";
+  } else {
+    this.style.color = "";
+  }
+});
++ .data([key,value],[key]) store/lấy data vào element
++ .removeData("key","key2") xóa data
++.get(index) lấy html elemnt trong jquery object
++.index(,selector,element) lấy index của thằng nào đó trong matched set
+
