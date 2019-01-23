@@ -8,8 +8,10 @@ giảm tải cho server. (vd: khi client nhập sai yêu cầu về tên, gửi 
 có jquevy validation thì server sẽ phải trả về, tốn tài nguyên). Jquery validation 
 sẽ check legit r ms gửi
 
-PHÂN BIỆT EACH VS MAP 
-
+PHÂN BIỆT EACH VS MAP
+Cả 2 đều pass các element trong matched set vào function.
+Each trả về kết quả của fucntion 
+Map trả về Jquery Object chứa kết quả của function
 
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -170,4 +172,18 @@ chỗ khác được (append, after)
 + .empty() xóa tất cả các con cháu chắt chít của mấy thằng trong matched set 
 + .remove() giống detach nhưng không lưu lại
 + .unwrap() xoá parent của matched set
+----------------------------------------------------------------------------------------
+DOM REPLACEMENT
++ .replaceAll(target) 
+  vd: $( "<h2>New heading</h2>" ).replaceAll( ".inner" ); 
+  thây tất cả những thằng có class inner bằng h2 
+  Nếu 2 thằng replace cho nhau thì thằng target sẽ bị xóa (cả data + event handler), thằng source sẽ move tới chỗ  thằng target
++ .replaceWith() giống replaceAll nhưng đảo ngược
+----------------------------------------------------------------------------------------
+GENERAL ATTRIBUTE 
++ .attr("attribute name") trả về attribute value của THẰNG ĐẦU TIÊN trong matched set. để lấy của từng thằng, sử dụng loop .each() hoặc .map()
++ .prop() trả về property value của THẰNG ĐẦU TIÊN 
++ .removeAttr("attribute name") xóa attribute khỏi TỪNG thằng trong matched set
++ .remmoveProp() tương tự removeAttr
++ .val() lấy element value của thằng đầu tiên trong set
  
