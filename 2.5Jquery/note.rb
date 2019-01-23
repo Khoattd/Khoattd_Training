@@ -108,10 +108,10 @@ chỉ giúp check object hiện tại hỏa điều kiện hay ko
 + .map( callback) cho mỗi thằng trong matched set vào function, return 1 jquery objec mới
 + .not(selector/function/selection) lọc những thằng không mathced yêu cầu, thằng nào không matched thì được chọn
 + .slice(start [,end]) cắt matched set thành đoạn, có thể  xài số âm 
----------------------------------------------------------------------------------------------------------
-DOM manipulation methods
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DOM MANIPULATION METHODS
 + .addClass("classname"/fucntion) /.removeClass : thêm hhoặc bỏ class, thêm nhiều class cùng lúc được 
-có chấp nhận method : 
+có chấp nhận function: 
 vd: $( "ul li" ).addClass(function( index ) {
     return "item-" + index;
   });
@@ -119,4 +119,17 @@ vd: $( "ul li" ).addClass(function( index ) {
 + .hasClass("classname") check trong matched set có class name ko. return boolean 
 + .toggleCLass
 ----------------------------------------------
-+ .clone
+COPY
++ .clone() deep copy tạo ra một element mới. không pass argument thì event handler sẽ ko copy theo. 
+vd : .clone(true,true). không nên xài khi element có id 
+----------------------------------------------
+INSERTION, AROUND 
++ .wrap([selector]) / .unwrap() thêm hoặc xóa parent của thằng nào đó. 
+  vd: $("p").warp("<div class='test'> </div>") =>> tìm những thằng p rồi bọc nó bằng div 
++ .wrapAll() thằng này tạo DOM tree mới. những thằng không có trong set matched ra rìa ko đc wrap 
+  vd: tương tự wrap
++ .wrapInner() thêm phân tử vô trong element đc chọn 
+  vd: $("div").wrapInner("<div class='test'></div>") thêm 1 div class test vào trong các div hiện có
+  thằng div class test wrap xung quanh content của thằng wrap đc chọn
+------------------------------------------------
+
