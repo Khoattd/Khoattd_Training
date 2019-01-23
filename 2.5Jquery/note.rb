@@ -122,14 +122,38 @@ vd: $( "ul li" ).addClass(function( index ) {
 COPY
 + .clone() deep copy tạo ra một element mới. không pass argument thì event handler sẽ ko copy theo. 
 vd : .clone(true,true). không nên xài khi element có id 
+
 ----------------------------------------------
 INSERTION, AROUND 
+
 + .wrap([selector]) / .unwrap() thêm hoặc xóa parent của thằng nào đó. 
   vd: $("p").warp("<div class='test'> </div>") =>> tìm những thằng p rồi bọc nó bằng div 
 + .wrapAll() thằng này tạo DOM tree mới. những thằng không có trong set matched ra rìa ko đc wrap 
   vd: tương tự wrap
-+ .wrapInner() thêm phân tử vô trong element đc chọn 
++ .wrapInner( [function]) thêm phân tử vô trong element đc chọn 
   vd: $("div").wrapInner("<div class='test'></div>") thêm 1 div class test vào trong các div hiện có
   thằng div class test wrap xung quanh content của thằng wrap đc chọn
-------------------------------------------------
+  vd: pass function: $( ".inner" ).wrapInner(function() {
+    return "<div class='" + this.nodeValue + "'></div>";
+  });
 
+------------------------------------------------
+INSERTION, INSIDE
++ .append(content [,content]) có thể  pass function thêm content vào content của matched set 
+  vd: $( ".inner" ).append( "<p>Test</p>" ); : thêm vào content của thằng có class inner một p nội dung test
+  có thể  thêm element này vào element khác 
+   vd: $("div").append($("p.wow")) DI CHUYỂN p có class wow vào trong div. nếu có nhiều target thì p.wow 
+   sẽ được clone
+
++ .appendTo() hoạt động giống append nhưng cú pháp ngược lại 
+  vd: ("<p>Test</p>").appendTo(".inner") => thêm p có conntent test vào content của .inner
+
++ .html() output là content html của thằng đầu tiên trong matched set (XML ko xài được)
+  vd: $("p").html() => <strong>Description: "</strong>Get the HTML contents of the first."
++ .html(htmlString/function) set html content của TỪNG thằng trong matched set.
+  cái htmlString sẽ thay tất cả các content của thằng trong matched set
+   vd: $( "div.demo-container" ).html( "<p>All new content. <em>You bet!</em></p>" );
++ .prepend()/.prependTo() tương tự như append nhưng THÊM VÀO ĐẦU
++ .text() lấy ra text trong content của tất cả những thằng con cháu chắt chít của từng thằng trong matchedset
+  .text("texta"/function) thêm text a vào content. Raw text, không input element đc như html
+ 
