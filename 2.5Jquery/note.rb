@@ -156,4 +156,18 @@ INSERTION, INSIDE
 + .prepend()/.prependTo() tương tự như append nhưng THÊM VÀO ĐẦU
 + .text() lấy ra text trong content của tất cả những thằng con cháu chắt chít của từng thằng trong matchedset
   .text("texta"/function) thêm text a vào content. Raw text, không input element đc như html
+-----------------------------------------------------------------------------------------------
+DOM INSERTION/OUTSIDE
++ .after() các tính chất tương tự .append()
+vd $( ".inner" ).after( "<p>Test</p>" ); thêm 1 p sau .inner
++ .before()
++ .insertAffter() tương tự như .appendTo()
++ .insertBefore()
+--------------------------------------------------------------------------------------
+DOM REMOVAL 
++ .detach(selector) loại bỏ trong matched set các selector. tuy nhiên vẫn lưu lại và có thể  sử  dụng 
+chỗ khác được (append, after)
++ .empty() xóa tất cả các con cháu chắt chít của mấy thằng trong matched set 
++ .remove() giống detach nhưng không lưu lại
++ .unwrap() xoá parent của matched set
  
