@@ -248,5 +248,52 @@ EFFECTS
 + slideUp(), slideDown() .slideToggle()
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 EVENTS 
+multiple events, same handler: 
+$( selector ).on(
+    "event1 event2", 
+    function() {    }
+);
+Multiple events, Different handler:
+$( selector ).on({
+    "event1": function() { },
+    "event2": function() {  }
+});
 
- 
+BROWSER EVENT 
++ .error()  (short cut của .on( "error", handler ).)
++ .resize() khi browser đổi kích thước 
++ scroll()
+2 cái dưới hay attach cho window object
+vd: $( window ).scroll(function() {
+  $( "span" ).css( "display", "inline" ).fadeOut( "slow" );
+});
+------------------------------------------------------------------
+DOCUMENT LOADING
+$.holdReady(true/false) hold xong nhớ thả. thưởng để  ngay sau script source jquery
+$.ready()
+.ready()
+.load() call event handler khi element load xong hoặc các element con load xong (thường xài vs window, image)
+.unload() phải bound với window object. xảy ra khi load page khác, next hoặc back, close browser
+-------------------------------------------------------------------------
+EVENT HANDLER ATTACHMENT
++ .bind() = .on()
++ .delegated() từ 3.0 ko xài nữa thay bằng on()
++ .live() gắn event handler vào matched element, kể cả trong tương lai
+cũng bị thay bởi on
+không chain đc , mỗi lần chạy lại dò selector lại từ đầu
++ .die() gỡ event handler đc gắn bởi live
++ .off() :gỡ event handler 
++ .one() event handler chỉ được gọi 1 lần, vd : chỉ click 1 lần, mấy lần click sau ko làm gì
++ .trigger() call tất cả các event hanlder đc gắn vs element theo event type
+MOUSE EVENT:
++ .contextmenu() : click phải 
++ .dblclick()
++ .hover(handlerIn,handerOut)
++ .mouseup() 
++ .mousedown()
++ .click() +>  CHỈ CHẠY KHI MOUSE DOWN VÀ UP BÊN TRÊN ELEMENT.
++ mouseenter() vs mouseover() hover khi di chuyển chuột bên trong element thì nó vẫn trigger
++mouseleave() vs mouseout() mouseleave  chỉ trigger với element nó gắn vs, ko tính con cháu chắt chít
+KEYBOARD EVENT 
++ .keydown vs keypress: non-printing key : shift, delete, esc ko trigger key press.
+keypress xác định ký tự nào được nhập trong khi keypress và key down xác định key nào đc ấn
