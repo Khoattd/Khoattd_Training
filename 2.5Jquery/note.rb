@@ -213,3 +213,40 @@ vd:  $( "div" ).each(function( i ) {
 +.get(index) lấy html elemnt trong jquery object
 +.index(,selector,element) lấy index của thằng nào đó trong matched set
 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EFFECTS
++ .animate( properties [, duration ] [, easing ] [, complete ] ) thêm animation 
++ .clearQueue([queueName]) đừng đang hoạt động hoặc bỏ animation đang hoạt động 
++ .delay( duration [, queueName ] ) 
++ .dequeue() lấy next animation trong quêue để xài cho matched hiện tại
++ .finish chấm dứt tất cả animation (kể quả queue) vẫn chạy tới kết quả cuối
++ jQuery.fx.interval chỉnh fps của animation
++ .queue   (nên theo sau bằng dequeue đê animation sau đc chayj tiếp)
+        vd:  $( "div" )
+          .show( "slow" )
+          .animate({ left: "+=200" }, 2000 )
+          .queue(function() {
+           $( this ).addClass( "newcolor" ).dequeue();
+          })
+          .animate({ left: "-=200" }, 500 )
+          .queue(function() {
+           $( this ).removeClass( "newcolor" ).dequeue();
+          })
+          .slideUp();
+.queue( "fx", [] ) dừng animation, giữ trạng thái hiện tại
+
++.stop() dừng animation đang chạy 
+ .stop(clearQueue,jumpToEnd) https://api.jquery.com/finish/
+ ----------------------------------------------------------------
+ FADING 
+ + .fadeIn() , .fadeOut(), .fadeToggle()
+ + .fadeTo( duration, opacity [, complete ] )
+ vd : .fadeTo( "slow" , 0.5, function() {
+  // Animation complete.
+});
+
++ slideUp(), slideDown() .slideToggle()
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EVENTS 
+
+ 
