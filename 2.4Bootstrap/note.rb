@@ -151,3 +151,22 @@ default: xếp ngay bên trene bên trái
 để chuyển sang phải add:
 .dropdown-menu-right
 Thêm dropdown header ở giữ các option:  <li class="dropdown-header">Dropdown header</li>
+.divider: thêm thanh divider
+.disabled
+BUTTON GROUPS :
+NAV :
+vd: <ul class="nav nav-tabs">
+<li role="presentation" class="active"><a href="#">Home</a></li>
+<li role="presentation"><a href="#">Profile</a></li>
+<li role="presentation"><a href="#">Messages</a></li>
+</ul>
+
+.nav-tab, .nav-pill, .nav-stacked, .nav-justified
+vd: <ul class="nav nav-tabs nav-justified">
+...
+</ul>
+<ul class="nav nav-pills nav-justified">
+...
+</ul>
+
+thêm .disabled vào các li để disable nó
