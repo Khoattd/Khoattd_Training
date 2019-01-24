@@ -2,7 +2,8 @@
 Jquery làm được thì JS làm được nhưng dài hơn (không có chiều ngược lại)
 mục tiêu: làm gọn gàng code. Cho phép sử dụng attribute selector với nhưng
 browser không hỗ  trợ
-Ajax: read2know
+AJAX được sử dụng để giao tiếp giữa client và server mà không cần reload page vd như yêu cầu check mail mới 
+https://learn.jquery.com/ajax/jquery-ajax-methods/
 Jquery Validation: plugin của jquery giúp kiểm tra độ valid của dữ liệu phía client,
 giảm tải cho server. (vd: khi client nhập sai yêu cầu về tên, gửi lên server, không 
 có jquevy validation thì server sẽ phải trả về, tốn tài nguyên). Jquery validation 
@@ -10,9 +11,11 @@ sẽ check legit r ms gửi
 
 PHÂN BIỆT EACH VS MAP
 Cả 2 đều pass các element trong matched set vào function.
-Each trả về kết quả của fucntion 
-Map trả về Jquery Object chứa kết quả của function
+Each trả về kết quả của fucntion (trả về array cũ)
+Map trả về array mới Jquery Object chứa kết quả của function
 
+Each tương tự như for 
+Map tạo ra mảng mới với mỗi phần tử trong mảng đó là các phần tử trong mảng cũ được đưa qua function
 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SELECTOR
@@ -297,3 +300,4 @@ MOUSE EVENT:
 KEYBOARD EVENT 
 + .keydown vs keypress: non-printing key : shift, delete, esc ko trigger key press.
 keypress xác định ký tự nào được nhập trong khi keypress và key down xác định key nào đc ấn
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
