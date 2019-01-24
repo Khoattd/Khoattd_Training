@@ -145,3 +145,9 @@ vd: sử dụng icon bên trong nút :
 <button type="button" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
 </button>
+
+DROP DOWN :
+default: xếp ngay bên trene bên trái 
+để chuyển sang phải add:
+.dropdown-menu-right
+Thêm dropdown header ở giữ các option:  <li class="dropdown-header">Dropdown header</li>
