@@ -91,6 +91,7 @@ Inline Form
 // sr-only: không hiện label
 //form-group: optinum spacing
 //form-control: nhận default style
+VD:
 <form class="form-inline"> //cho form nằm cùng 1 hàng
   <div class="form-group">
     <label class="sr-only" for="exampleInputEmail3">Email address</label> 
@@ -100,10 +101,47 @@ Inline Form
     <label class="sr-only" for="exampleInputPassword3">Password</label>
     <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
   </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Remember me
-    </label>
-  </div>
   <button type="submit" class="btn btn-default">Sign in</button>
 </form>
+
+HORIZONTAL FORM
+<form class="form-horizontal">: xếp label và form cùng 1 hàng (không nhất thiết phải là form)
+SUPPORTTED CONTROLS 
+#text, password, datetime, datetime-local, date, month, time, week, number, email, url, search, tel, and color.#
+form-control support texarea: <textarea class="form-control" rows="3"></textarea>
+RADIO/CHECKBOX
+radio, .radio-inline, .checkbox, or .checkbox-inline.
+VD: <label class="checkbox-inline">
+<input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+</label>
+SELECTS :
+<select multiple class="form-control"> : showw multiple option
+STATIC CONTROL : cố định cái email@example.
+<div class="form-group">
+    <label class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-10">
+      <p class="form-control-static">email@example.com</p>
+    </div>
+
+CÁC PROPERTY:
++disabled => đặt trong <fieldset> để  disabled cả đống
++readonly 
+
+BUTTON TAGS
+Use the button classes on an <a>, <button>, or <input> element.
+VD: <input class="btn btn-default" type="submit" value="Submit">
+Color :  btn- : default, success, info, warning,danger, link
+Size :   btn- :lg, sm, xs
+
+IMAGE RESPONSIVE :
+Thêm class image-responsive trong tag img
+đổi shape image: thêm class img-rounded, img-circle, img-thumbnail
+
+GLYPH ICON :
+USE: chỉ sử dụng trên element rỗng, không mix với các element khác 
+change location:@icon-font-path and/or @icon-font-name
+<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+vd: sử dụng icon bên trong nút : 
+<button type="button" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
+</button>
