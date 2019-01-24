@@ -75,3 +75,12 @@ table-striped:  sọc hàng
 table-bordered: viền trong và ngoài table
 table-hover: hover qua đổi màu
 table-condensed: giảm cell padding còn 1/2
+CONTEXTUAL CLASSES 
+áp dụng cho row: <tr class=""> cho cell: <td class ="">
+.active: apply hover color cho cell/row cụ thể
+.success: positive action (màu)
+.info: neutral change or action (màu)
+.warning: need attention (màu)
+.danger: negavtive attention
+RESPONSIVE TABLE
+bao table bằng <div class="table-responsive"> để table linh hoạt hơn trong các device nhỏ
