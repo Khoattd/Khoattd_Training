@@ -84,3 +84,26 @@ CONTEXTUAL CLASSES
 .danger: negavtive attention
 RESPONSIVE TABLE
 bao table bằng <div class="table-responsive"> để table linh hoạt hơn trong các device nhỏ
+thêm vào input class="form-control" để prestyle (width 100)
+wrap input trong <div class="form-group"> để chỉnh width
+Inline Form
+//form-inline: cho form nằm cùng 1 hàng
+// sr-only: không hiện label
+//form-group: optinum spacing
+//form-control: nhận default style
+<form class="form-inline"> //cho form nằm cùng 1 hàng
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputEmail3">Email address</label> 
+    <input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email"> 
+  </div>
+  <div class="form-group">
+    <label class="sr-only" for="exampleInputPassword3">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+  </div>
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> Remember me
+    </label>
+  </div>
+  <button type="submit" class="btn btn-default">Sign in</button>
+</form>
