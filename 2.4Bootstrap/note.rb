@@ -47,7 +47,7 @@ p class="text-lowercase">Lowercased text.</p>
 
 TRANFORMATION CLASSES
 <abbr title="attribute">attr</abbr> : thêm dotted bottom + hover 
-thêm class intitialism để thêm tí font size nhỏ hơn 
+thêm class initialism để thêm tí font size nhỏ hơn 
 <address> </address> thêm address ngay sau thằng parent gần nhất 
 <blockquote></blockquote> wrap bất kì thằng html nào để nó thành quote 
 
@@ -153,7 +153,21 @@ default: xếp ngay bên trene bên trái
 Thêm dropdown header ở giữ các option:  <li class="dropdown-header">Dropdown header</li>
 .divider: thêm thanh divider
 .disabled
-BUTTON GROUPS :
+BUTTON DROPDOWN :
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
+  aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
+
 NAV :
 vd: <ul class="nav nav-tabs">
 <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -170,3 +184,4 @@ vd: <ul class="nav nav-tabs nav-justified">
 </ul>
 
 thêm .disabled vào các li để disable nó
+
