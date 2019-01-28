@@ -169,7 +169,8 @@ RUBY - STRINGS :
     + capitalize/capitalize[option] -> new_str  # viết hoa chữ đầu string 
             capitalize! : return nil nếu không có thay đổi nào
       downcase/downcase(option)
-      upcase                      
+      upcase   
+      swapcase: đảo case của str                    
     + casecmp(str2): Case Insensitive version của <=>
       casecmp? -> true,false,nil so sánh 2 string có bằng nhau ko. case insensitive
     + center(width,[padstr='']). center string trong 1 string có chiều dài là width, đệm là padstr 
@@ -191,6 +192,7 @@ RUBY - STRINGS :
       delete!: inplace,m return nil 
       delete_prefix/!, _suffix/!
     + dump : nhưng char ko print đc đc thêm \ đằng trc
+      undump: ngược với dump
     + "hello".each_byte {|c| print c, ' ' } =>> cho byte của mỗi char vào code 
         kết quả: 104 101 108 108 111
         each_char: tương tự nhưng thay byte = char
@@ -213,8 +215,9 @@ RUBY - STRINGS :
     + encode(encoding [, options] )
         encode(dst_encoding, src_encoding [, options] ) → str           #có thêm !
         encode([options]) → str
-        ????????????????????????//
+       
     + end_with?(""), check đuôi của string, có thể  check nhiều đuôi, chỉ cần 1 cái đúng trả về true 
+      start_with? : tương tự
     + eql?("str2") - > true/false: so sánh s string, true khi giống nhau hoàn toàn, CASE SENSITIVE 
     + force_encoding(encoding): chuyển string sang dạng encoding khac 
     +   gsub(pattern, replacement) → new_str
@@ -227,5 +230,117 @@ RUBY - STRINGS :
             "hello".gsub(/./) {|s| s.ord.to_s + ' '}      #=> "104 101 108 108 111 "
             "hello".gsub(/(?<foo>[aeiou])/, '{\k<foo>}')  #=> "h{e}ll{o}"
             'hello'.gsub(/[eo]/, 'e' => 3, 'o' => '*')    #=> "h3ll*"
-
-
+    + hash -> integer
+    + include?("str2") : check str1 có str2 hay ko 
+    + index(substring [, offset]) → integer or nil
+        index(regexp [, offset]) → integer or nil
+        tìm index của substring hoặc regexp, offset để xác định vị trí bắt đầu tìm, negative sẽ tìm từ sau lên 
+      rindex(substring [, integer]) → integer or nil
+      rindex(regexp [, integer]) → integer or nil
+       #lấy index của chữ cuối cùng 
+         
+    + replace(str2) thay str bằng str2 
+    + insert(index, other_str) → str
+    + inspect 
+    + length 
+    + ljust(integer, padstr=' ') → new_str
+        nếu str.length nhỏ hơn integer, padd thêm bên phải cho bằng 
+      rjust: tương tự nhưng thêm vào bên trái 
+    + lstrip: loại bỏ whitespace đầu string 
+      lstrip! return nil nếu không đổi 
+      rstrip: loại bỏ whitespace cuối string 
+      strip/! : loại bỏ ở cả đầu và đuôi 
+    +   match(pattern) → matchdata or nil
+        match(pattern, pos) → matchdata or nil
+        #tìm cái pattern match
+        vd: khoa = String.new("Tran Thanh Dang Khoa")
+            khoa.match("T.....") => Tran T
+        thêm ? : trả về  true/false 
+??????????????????????????????????????????????????
+    + next : trả về string next của nó: 
+    vd "khoa".next => "khob"; "khoa".next.next = "khoc"
+      !: inplace 
+    + oct : chuyển sang bát phân 
+    + ord: lấy code mã 
+    + partition(sep) → [head, sep, tail]
+      partition(regexp) → [head, match, tail]
+      vd:   "hello".partition("l")         #=> ["he", "l", "lo"]
+            "hello".partition("x")         #=> ["hello", "", ""]
+            "hello".partition(/.l/)        #=> ["h", "el", "lo"]
+      rpartition: làm ngược từ đuôi string lên
+    + prepend(str2,str3) thêm vào trước str str2, str3
+    + replace(str2) thay str bằng str2 
+    + reverse : đảo ngược str. thêm ! để  return ngay trên str 
+    + scan(pattern) → array 
+      scan(pattern) {|match, ...| block } → str
+      vd:   a = "cruel world"
+            a.scan(/\w+/)        #=> ["cruel", "world"]
+            a.scan(/.../)        #=> ["cru", "el ", "wor"]
+            a.scan(/(...)/)      #=> [["cru"], ["el "], ["wor"]]
+            a.scan(/(..)(..)/)   #=> [["cr", "ue"], ["l ", "wo"]]
+    
+            a.scan(/\w+/) {|w| print "<<#{w}>> " }
+            print "\n"  #<<cruel>> <<world>>
+            a.scan(/(.)(.)/) {|x,y| print y, x }
+            print "\n" #rceu lowlr
+    + scrub → new_str 
+      scrub(repl) → new_str
+      scrub{|bytes|} → new_str 
+    thay invalid bytes sequce bằng repl hoặc bằng return của block
+    vd:  "abc\u3042\x81".scrub("*") #=> "abc\u3042*"
+         "abc\u3042\xE3\x80".scrub{|bytes| '<'+bytes.unpack('H*')[0]+'>' } #=> "abc\u3042<e380>"
+     thêm ! để return ngay trên str, retủn nil nếu không đổi 
+    + sub(pattern, replacement) → new_tr
+      sub(pattern, hash) → new_str
+      sub(pattern) {|match| block } → new_str
+     tương tự nhưu scrub nhưng hoạt động với những thằng pattern 
+     #chỉ thay những thằng match đầu tiên
+     vd: "hello".sub(/[aeiou]/, '*')     #=> "h*llo"
+      thêm ! để in place và return nil 
+    + setbyte(index,integer) set indeth byte thành integer 
+    + size : check character length 
+    + slice(index) → new_str or nil
+      slice(start, length) → new_str or nil
+      slice(range) → new_str or nil
+      #nếu passnegative làm làm từ sau lên
+      slice(regexp) → new_str or nil
+      slice(regexp, capture) → new_str or nil
+      slice(match_str) → new_str or nil 
+      trả về đoạn slice 
+      thêm !: xóa đoạn slice ra khỏi source str 
+    + split(pattern [,limit]): cắt str ra từng đoạn 
+       vd:  "hello".split(//)               #=> ["h", "e", "l", "l", "o"]
+            "hello".split(//, 3)            #=> ["h", "e", "llo"]
+            "mellow yellow".split("ello")   #=> ["m", "w y", "w"]
+    + squeeze(str2). 
+        nếu không pass thì rút nhưng chữ đi đôi vd :"yellow moon".squeeze                  #=> "yelow mon"
+        nếu pass argument thì thì áp dụng vs những chữ có trong str2 
+        áp dụng từ chữ m tới z = > "m-z"
+        thêm ! để inplace + return nil 
+    + sum(n=integer) trả về n-basic checksum của str 
+    + to_c: chuyển string biểu diễn số phức thành số phức 
+    '3-4i'.to_c        #=> (3-4i)
+    + to_f: chuyển string thành số float (chỉ đổi số đấu trong từ)
+    vd: "45.67 degrees".to_f   #=> 45.67
+    + to_i(base=n) chuyển về số base n. n từ 2 ts 36
+    + to_r : chuyển về phần số / rút gọn phân số 
+    + to_sym: trả bề symbol của str. nếu chưa có symbol thì tạo 
+     vd:s = 'cat'.to_sym       #=> :cat
+        s == :cat              #=> true
+    + tr(form_str, to_str) thay 
+    vd :    "hello".tr('el', 'ip')      #=> "hippo"
+            "hello".tr('aeiou', '*')    #=> "h*ll*
+    bắt đầu bằng ^ để loại bỏ nó 
+    + tr_s() thực hiện tr, rồi loại bỏ những chữ bị duplicate 
+    + unicode_normalize(:nfc/:nfd/:nfkc/:nfkd)\
+        thêm !,? 
+    + upto(other_str, exclusive=false) {|s| block } → str 
+      upto(other_str, exclusive=false) → an_enumerator
+      vd :  "a8".upto("b6") {|s| print s, ' ' }  
+            for s in "a8".."b6"
+            print s, ' '
+            end
+            produces: a8 a9 b0 b1 b2 b3 b4 b5 b6
+    + valid_encoding? → true or false check xem có encode đúng ko
+    vd: "\xc2\xa1".force_encoding("UTF-8").valid_encoding?  #=> true
+        "\xc2".force_encoding("UTF-8").valid_encoding?      #=> false
