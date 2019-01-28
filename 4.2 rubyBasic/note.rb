@@ -129,7 +129,6 @@ RUBY - STRINGS :
             foo = myStr.downcase
             puts "#{foo}"
     + try_convert(obj) : convert 1 obj thành string, return nil nếu ko convert được (#to_string method)
-
     + Str % arg: sử dụng str như format, apply to arg 
     format : %[flags][width][.precision]type
     flags: quyết định định dạng vd thêm 0x, cách viết số âm 
@@ -144,7 +143,7 @@ RUBY - STRINGS :
 
     + Str << object/integer :append obj vô str , nếu pass integer thì append code point 
         vd: a << "world"   #=> "hello world"
-    + Str <=> str2: return -1,0,1,nil : so sánh 2 string so chiều dài của Str vs str2 (CASE INSENSITIVE)
+    + Str <=> str2: return -1,0,1,nil : so sánh 2 string so chiều dài của Str vs str2 (CASE SENSITIVE)
     + Str == object (object#==) [return true or false]
         nếu object ko phải instance của String nhưng respond to to_string thì so sánh được 
         SO SÁNH LENGTH VÀ CONTENT 
@@ -170,8 +169,63 @@ RUBY - STRINGS :
     + capitalize/capitalize[option] -> new_str  # viết hoa chữ đầu string 
             capitalize! : return nil nếu không có thay đổi nào
       downcase/downcase(option)
-      upcase 
-
-
+      upcase                      
+    + casecmp(str2): Case Insensitive version của <=>
+      casecmp? -> true,false,nil so sánh 2 string có bằng nhau ko. case insensitive
+    + center(width,[padstr='']). center string trong 1 string có chiều dài là width, đệm là padstr 
+    + chars: xếp string thành array 
+    + chomp: cắt \r, \n, \r\n khỏi cuối string, nếu pass str2 thì cắt str2 khỏi str cuối str 
+      chomp!: inplace, nil nếu ko đổi 
+    + chop: cắt chữ cuối. \r\n cắt cả đôi, \n\r chỉ cắt \r
+    #xài chomp an toàn hơn vì ko đổi string nếu end ko phải là \n \r 
+      chop!:
+    + chr: return char đầu tiên 
+    + clear: empty string 
+    + concat(obj1,obj2): giống + 
+    + count([str2]+) -> integer đếm str2 có trong str, hoặc các ký tự của str 2 có trong str2
+    vd : count ("hello","^l") đếm chữ h, e, o, trừ chữ l
+        c1-c2: đếm các chữ giữa c1,c2
+        "\\^aeiou" đếm ^,a,e,i,o,u
+    + crypt(satl_str): mã hóa 
+    + delete(str2+). rule giống count
+      delete!: inplace,m return nil 
+      delete_prefix/!, _suffix/!
+    + dump : nhưng char ko print đc đc thêm \ đằng trc
+    + "hello".each_byte {|c| print c, ' ' } =>> cho byte của mỗi char vào code 
+        kết quả: 104 101 108 108 111
+        each_char: tương tự nhưng thay byte = char
+        each_codepoint
+    + eachline: cắt string thành các sub string rồi hiện ở mỗi line khác nhau 
+        vd: print "Example one\n"
+            "hello\nworld".each_line {|s| p s} 
+            Example one
+                "hello\n"
+                "world"
+            print "Example two\n"
+            "hello\nworld".each_line('l') {|s| p s}
+            print "Example three\n"
+                 Example two
+                "hel"
+                "l"
+                "o\nworl"
+                "d"
+    + empty? -> true/false : chekc length của string 
+    + encode(encoding [, options] )
+        encode(dst_encoding, src_encoding [, options] ) → str           #có thêm !
+        encode([options]) → str
+        ????????????????????????//
+    + end_with?(""), check đuôi của string, có thể  check nhiều đuôi, chỉ cần 1 cái đúng trả về true 
+    + eql?("str2") - > true/false: so sánh s string, true khi giống nhau hoàn toàn, CASE SENSITIVE 
+    + force_encoding(encoding): chuyển string sang dạng encoding khac 
+    +   gsub(pattern, replacement) → new_str
+        gsub(pattern, hash) → new_str
+        gsub(pattern) {|match| block } → new_str                 #có thêm !
+        gsub(pattern) → enumerator
+    thay những cái thỏa pattern bằng replacement 
+        vd: "hello".gsub(/[aeiou]/, '*')                  #=> "h*ll*"
+            "hello".gsub(/([aeiou])/, '<\1>')             #=> "h<e>ll<o>"
+            "hello".gsub(/./) {|s| s.ord.to_s + ' '}      #=> "104 101 108 108 111 "
+            "hello".gsub(/(?<foo>[aeiou])/, '{\k<foo>}')  #=> "h{e}ll{o}"
+            'hello'.gsub(/[eo]/, 'e' => 3, 'o' => '*')    #=> "h3ll*"
 
 
