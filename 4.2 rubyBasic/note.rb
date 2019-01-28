@@ -392,6 +392,10 @@ REMOVING ITEM :
             thêm {"mess"} để hiện mess nếu không thấy item 
     .compact :loại bỏ những thằng nil #thêm ! để  in place 
     .uniq: loại bỏ duplicate khỏi array 
+    .drop(n): loại bỏ n phần tử đầu rồi dời array 
+        drop_while { |obj| block } : loại bỏ có điều kiện
+        chạy từ trái sang phải. tới khi nào ko thỏa điều kiện thì dừng, kể cả khi các phần tử sau đó có 
+        thỏa điều kiện hay không
 LẶP QUA ARRAY :
     EACH :
     arr = [1, 2, 3, 4, 5]
@@ -470,4 +474,8 @@ METHOD :
     + cycle(n=nil) { |obj| block } → nil
       cycle(n=nil) → Enumerator
       gọi block cho mỗi element n lần, nếu n là nil thì gọi mãi 
-    
+    + dig(idx,idx2): lấy phần tử trong array con 
+    + each:    
+        vd: a = [ "a", "b", "c" ]
+            a.each {|x| print x, " -- " }
+        each_index : thay vì pass element sẽ pass index của element 
