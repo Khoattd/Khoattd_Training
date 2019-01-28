@@ -128,36 +128,27 @@ RUBY - STRINGS :
         vd: myStr = String.new("THIS IS TEST")
             foo = myStr.downcase
             puts "#{foo}"
-    MỘT SỐ METHOD: 
-        + str*[int]: lặp lại str int lần 
-        + str + other : gộp 2 string
-        + str << obj/integer : append object to string, hoặc append code point to string 
+    + try_convert(obj) : convert 1 obj thành string, return nil nếu ko convert được (#to_string method)
 
-        + str <=> other_str: so sánh 2 string (length). return -1 (less than), 0, 1, nil. CASE INSENSITIVE
-        + str == obj. false khi object ko phải là string. true khi str <=> obj return 0
-        + str.capitalize : uppercase chữ đầu
-             .capitalize! : tương tự nhưng changes in place ??????????
-             .swapcase 
-             .downcase, str.downcase!
-             .upcase, upcase!
-        + str.chop: bõ chữ cuối
-             .chop!: giống chop  
-             .rstrip: bỏ whitespace cuối string  
-             .strip/!: bỏ cả whitespace đầu và cuối/return nil nếu ko đổi     
-        + str.center: center str 
-        + str.chomp. bõ $/, \n cuối string
-        + str.concat(str2) gộp 2 str
-        + str.crypt(str2) : mã hóa 
-        + str.count 
-        +str.delete(str2): xóa các chữ trong str 2 ra khỏi str 1
-            .delete!(str2): tug tự delete 
-       
-        + str.dump: in luôn những thằng ko in đc. vd "this is test" => in luôn ""
-        + str.index(substring/fixnum/regexp [, offset] dò index của substring
-             .rindex : dò index của thằng đuôi của substring 
-        + str.insert(index, other_str)
-        + str.lstrip/str.lstrip! loại bỏ whitespace đầu chữ/ return nil nếu ko change 
-        + str.replace(str2)
-        + str.reverse/reverse!
-        + str.rjust(integer, padstr = ' ') nếu độ dài str nhỏ hơn integer thì thêm paddstring đằng trc cho bằng
-        + str.slice(fixnum, fixnum)
+    + Str % arg: sử dụng str như format, apply to arg 
+    format : %[flags][width][.precision]type
+    flags: quyết định định dạng vd thêm 0x, cách viết số âm 
+    width: integer số character nhỏ nhất viết vô kết quả vd %05d decimal, cần 5 số, nếu 123 thì ra 00123 
+    vd: "%-5s: %08x" % [ "ID", self.object_id ]   #=> "ID   : 200e14d6"
+        "%05d" % 123                              #=> "00123"
+    
+    + Str * int: lặp lại str int lần 
+    + Str + str2: gộp str2 vào sau Str 
+    + +str -> str(mutable): nếu string frozen, return duplicated mutable string
+      -str -> str(frozen): nếu string frozen, trả lại chính nó. nếu ko return forzen string 
+
+    + Str << object/integer :append obj vô str , nếu pass integer thì append code point 
+        vd: a << "world"   #=> "hello world"
+    + Str <=> str2: return -1,0,1,nil : so sánh 2 string so chiều dài của Str vs str2 (CASE INSENSITIVE)
+    + Str == object (object#==) [return true or false]
+        nếu object ko phải instance của String nhưng respond to to_string thì so sánh được 
+        SO SÁNH LENGTH VÀ CONTENT 
+
+    + Str === obj  [return true or false] tg tự ở trên 
+    + Str =~ nil -> integer or nil 
+
