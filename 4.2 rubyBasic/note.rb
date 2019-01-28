@@ -150,5 +150,28 @@ RUBY - STRINGS :
         SO SÁNH LENGTH VÀ CONTENT 
 
     + Str === obj  [return true or false] tg tự ở trên 
-    + Str =~ nil -> integer or nil 
+    + Str =~ obj -> integer or nil 
+     ???????????????????????????????????????????????
+
+    + Str[index]/[start,length],[range],[regexp],[regexp,capture],[match_str] -> new_str hoặc nil 
+            + lấy ra chữ ở index 
+            + lấy ra substring từ start với length 
+            + range : [2..5] : trả về substring giữ index 2 và 5  
+            #trong 3 th trên, nếu index là negative thì đếm ngược lên 
+            + Regexp: /expression/. vd: /\d/ : số từ 0 ts 9 
+    + Str[index]/[index,index]/[range]/[regexp]/[regexp,integer/name]/[other_str] = new_str 
+            + thay thế content của Str bằng new_str
+    
+    + ascii_only? -> true/false .check string xem có chứa gì ngoài ascii ko 
+    + bytes : return array chứa bytes của các ký tự trong string 
+    + bytesize -> integer: return độ dài của str theo byte 
+    + byteslice(integer/ integer,integer / range) -> new_string or new 
+        giống Str[index] nhưng tính theo byte 
+    + capitalize/capitalize[option] -> new_str  # viết hoa chữ đầu string 
+            capitalize! : return nil nếu không có thay đổi nào
+      downcase/downcase(option)
+      upcase 
+
+
+
 
