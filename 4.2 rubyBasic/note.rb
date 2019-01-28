@@ -170,7 +170,7 @@ RUBY - STRINGS :
             capitalize! : return nil nếu không có thay đổi nào
       downcase/downcase(option)
       upcase   
-      swapcase: đảo case của str                    
+      swapcase: đảo case của str                t n    
     + casecmp(str2): Case Insensitive version của <=>
       casecmp? -> true,false,nil so sánh 2 string có bằng nhau ko. case insensitive
     + center(width,[padstr='']). center string trong 1 string có chiều dài là width, đệm là padstr 
@@ -344,3 +344,130 @@ RUBY - STRINGS :
     + valid_encoding? → true or false check xem có encode đúng ko
     vd: "\xc2\xa1".force_encoding("UTF-8").valid_encoding?  #=> true
         "\xc2".force_encoding("UTF-8").valid_encoding?      #=> false
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ARRAY
+    0-indexed
+    có thể chứa lọa giá trị khác nhau 
+    TẠO ARRAY 
+    ary = [1, "two", 3.0] #=> [1, "two", 3.0]
+    ary = Array.new    #=> []
+    Array.new(3)       #=> [nil, nil, nil]
+    Array.new(3, true) #=> [true, true, true]
+    Array.new(4) { Hash.new }  #=> [{}, {}, {}, {}]
+    Array.new(4) {|i| i.to_s } #=> ["0", "1", "2", "3"]
+    ARRAY NHIỀU CHIỀU :
+    empty_table = Array.new(3) { Array.new(3) }
+    #=> [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+
+    a = Array.new(2, Hash.new)
+    a[0]['cat'] = 'feline'
+    # => [{"cat"=>"feline"}, {"cat"=>"feline"}
+với cách tạo này, khi thay đổi 1 phần từ của array do nó chứa hash nên các thằng khác đổi theo
+    nên sử dụng dạng block để tạo các phần tử khác nhau: 
+    vd:  a = Array.new(2) { Hash.new }
+         a[0]['cat'] = 'feline'
+         a # => [{"cat"=>"feline"}, {}]
+ACCESS ARRAY :
+    arr[2, 3]: bắt đầu từ index 2, lấy 3 cái 
+    arr[1..-3]: bắt đầu từ index 1, kết thúc ở cái thứ 3 đếm ngc lên 
+    arr.at(index) = arr[index]
+    nếu lấy ngoài range của array sẽ trả về nil 
+    arr.fetch(index)= > lấy ngoài range báo về index error 
+    arr.fetch(index,"oops") => lấy ngoài range báo về "oops"
+    arr.fisrt/last: lấy thằng đầu / last 
+    arr.take/drop(n): lấy n gía trị đầu/cuối 
+ARRAY SIZE :
+    .count = .lenght 
+    .empty? -> true/false 
+    .include?('item') => có chứa item không 
+ADD ITEM 
+    .push() (or << ) => add vào cuối array 
+    .unshift() => add vào đầu array 
+    .insert(index,'item'): thêm item vào vị trí index #có thể thêm nhiều vlua cùng lúc 
+REMOVING ITEM :
+    .pop : xóa thằng cuối array và return nó 
+    .shift: xóa thằng đầu array và dời array, return nó 
+    .delete_at() : xóa tại index nào đó, dời array 
+    .delete(item): xóa item trong array, dời array 
+            thêm {"mess"} để hiện mess nếu không thấy item 
+    .compact :loại bỏ những thằng nil #thêm ! để  in place 
+    .uniq: loại bỏ duplicate khỏi array 
+LẶP QUA ARRAY :
+    EACH :
+    arr = [1, 2, 3, 4, 5]
+    arr.each { |a| print a -= 10, " " }
+    # prints: -9 -8 -7 -6 -5
+    #=> [1, 2, 3, 4, 5]
+
+    .reverse_each: giống each nhưng ngược từ dưới lên 
+    .map: tạo một array mới với các giá trị được thay đổi từ array cũ 
+    vd: arr.map { |a| 2*a }   #=> [2, 4, 6, 8, 10]
+        arr                   #=> [1, 2, 3, 4, 5]
+SELECTING FORM ARRAY :
+ vd:    arr = [1, 2, 3, 4, 5, 6]
+        arr.select { |a| a > 3 }     #=> [4, 5, 6]    có thể thêm !
+        arr.reject { |a| a < 3 }     #=> [3, 4, 5, 6] có thể thêm !
+        arr.drop_while { |a| a < 4 } #=> [4, 5, 6]
+        arr                          #=> [1, 2, 3, 4, 5, 6]
+    .delete_if {}
+    .keep_if {}
+METHOD :
+    + Array.try_convert([]) : chuyển object thành array 
+    ar1 & ar2 : tạo array mới chưa giá trị chung của ar1 và ar2 . Thứ tự của ar1 
+    + ar * int: tạo array mới lặp lại int lần 
+        *  "str" chuyển array thành string, các phần tử cách nhau bằng str
+    + ar1 + ar2 : gộp 2 array 
+    + ar1 - ar2 : bỏ những phần từ có trong ar2 ra khỏi ar1 
+    + ar << obj : thêm obj vào chính ar
+    vd: a << "c" << "d" << [ 3, 4 ]
+        #=>  [ 1, 2, "c", "d", [ 3, 4 ] ]
+    + ar1 <=> ar2 return -1,0,1,nil 
+    so sánh từng phần tử của ar1 với ar2 .
+    nó bằng khi từng phần tử  bằng nhau và bằng chiều dài 
+    nếu 1 cặp phần tử ko ss đc thì trả nil 
+    + ary == ar2 - > boolean : so sánh 2 array 
+    + ary[index] = obj → obj 
+      ary[start, length] = obj or other_ary or nil → obj or other_ary or nil
+      ary[range] = obj or other_ary or nil → obj or other_ary or nil
+      # dùng để set giá trị của array 
+      LƯU Ý : a[0..2] = "A"               #=> ["A", "4"] thay 1 range bằng 1 element duy nhất 
+    + assoc(obj): tìm trong ar1. với các phần tử của ar1 có thể là 1 array. nếu obj BẰNG VỚI PHẦN TỬ ĐẦU TIÊN 
+    CỦA ARRAY CON CỦA ar1 thì return nó. bằng nil khi không tìm thấy. kể cả nếu có obj nhưng không phải là 
+    array thì vẫn là nil   
+        vd: s1 = [ "colors", "red", "blue", "green" ]
+            s2 = [ "letters", "a", "b", "c" ]
+            s3 = "foo"
+            a  = [ s1, s2, s3 ]
+            a.assoc("letters")  #=> [ "letters", "a", "b", "c" ]
+            a.assoc("foo")      #=> nil
+    + bsearch {|x| block } → elem
+        dạng 1: find-mininum mode: array luôn phải sắp xếp từ thấp tới lớn rồi
+                vd: ary = [0, 4, 7, 10, 12]
+                ary.bsearch {|x| x >=   4 } #=> 4
+                ary.bsearch {|x| x >=   6 } #=> 7
+                ary.bsearch {|x| x >=  -1 } #=> 0
+        dạng 2: find-any mode : 
+            the block returns a positive number for ary if 0 <= k < i,
+            the block returns zero for ary if i <= k < j, and
+            the block returns a negative number for ary if j <= k < ary.size.
+            vd :    ary = [0, 4, 7, 10, 12]
+                    # try to find v such that 4 <= v < 8
+                    ary.bsearch {|x| 1 - x / 4 } #=> 4 or 7
+                    # try to find v such that 8 <= v < 10
+                    ary.bsearch {|x| 4 - x / 2 } #=> nil
+    + clear : xóa mọi phần tử 
+    + collect { |item| block } → new_ary  #giống với map
+      collect → Enumerator 
+        vd: a = [ "a", "b", "c", "d" ]
+            a.collect { |x| x + "!" }         #=> ["a!", "b!", "c!", "d!"]
+    thêm ! để thực hiện in place 
+    + combination(n) gộp n phần tử trong array rồi call block
+    vd: a.combination(3).to_a: lấy tổ hợp con có 3 phần tử, chuyển thành array, pass vào a lại 
+    + concat(ar1,ar2): thêm các phần tử của ar1 và ar2 vào ar 
+    + count → int  #đếm số  phần tử trong array 
+      count(obj) → int #đếm số phần tử equal với obj
+      count { |item| block } → int # đếm số phần tử thỏa block. block phải return true 
+    + cycle(n=nil) { |obj| block } → nil
+      cycle(n=nil) → Enumerator
+      gọi block cho mỗi element n lần, nếu n là nil thì gọi mãi 
+    
