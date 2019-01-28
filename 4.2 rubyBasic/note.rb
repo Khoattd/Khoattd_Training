@@ -376,6 +376,9 @@ ACCESS ARRAY :
     arr.fetch(index,"oops") => lấy ngoài range báo về "oops"
     arr.fisrt/last: lấy thằng đầu / last 
     arr.take/drop(n): lấy n gía trị đầu/cuối 
+        .take_while {block}
+    arr.value_at(id1,id2) :lấy các giá trị tại các index tương ứng 
+    
 ARRAY SIZE :
     .count = .lenght 
     .empty? -> true/false 
@@ -444,6 +447,8 @@ METHOD :
             a  = [ s1, s2, s3 ]
             a.assoc("letters")  #=> [ "letters", "a", "b", "c" ]
             a.assoc("foo")      #=> nil
+
+     rassoc: TÌM PHẦN TỬ CON THỨ 2 
     + bsearch {|x| block } → elem
         dạng 1: find-mininum mode: array luôn phải sắp xếp từ thấp tới lớn rồi
                 vd: ary = [0, 4, 7, 10, 12]
@@ -466,6 +471,7 @@ METHOD :
             a.collect { |x| x + "!" }         #=> ["a!", "b!", "c!", "d!"]
     thêm ! để thực hiện in place 
     + combination(n) gộp n phần tử trong array rồi call block
+      repeated_combination(n)
     vd: a.combination(3).to_a: lấy tổ hợp con có 3 phần tử, chuyển thành array, pass vào a lại 
     + concat(ar1,ar2): thêm các phần tử của ar1 và ar2 vào ar 
     + count → int  #đếm số  phần tử trong array 
@@ -479,3 +485,28 @@ METHOD :
         vd: a = [ "a", "b", "c" ]
             a.each {|x| print x, " -- " }
         each_index : thay vì pass element sẽ pass index của element 
+    + empty?
+    + eql?
+    + fill: thay phần tử 
+    + .index(element): trả về index của element 
+        rindex(element): trả về index của element cuối cùng xuất hiện 
+    + .flatten/([level]): giảm chiều của array 
+     #thêm ! để in plac e
+    + .frozen?
+    + hash -> integer  : tính hascode 
+    + include?(obj)
+    + replace(ar2): thay content của ar1 bằng ar2 
+    + reverse: đảo ngược element của aray #có option !
+    + .join("separator"): chuyển array thành string bắt bằng separator 
+    + max/min 
+    + permutation(n) { |p| block } → ary
+    + product(ar2): lấy từng phần tử của ar1 gộp với từng phần tử của ar2 mới tạo thành phần tử của ar lớn
+        vd: [1,2].product([1,2])       #=> [[1,1],[1,2],[2,1],[2,2]]
+    + rotate(n) xoay array  #có option!
+    + sample() lấy địa 1 element của array 
+    + select {|item| block} lấy ra giá trị nào làm block return true 
+    + shuffle  #có !
+    + sort #có !
+    + sum: tính tổng array 
+    + transpose : đảo ma trận 
+    +
