@@ -43,8 +43,8 @@ SYNTAX :
 RUBY CLASS AND OBJECTS
     4 type of varibles:
     local: defined in a method, ngoài method ko xài được bắt đầu vs lowercase letter hoặc _
-    instance: là variable của mỗi object, thay đổi theo từng object (available across method) 
-    class: biến xài được của một class, (available across objects), bắt đầu bằng @@
+    instance: là variable của mỗi object, thay đổi theo từng object (available across method). bắt đầu bằng @
+    class: biến xài được của một class, (available across objects), bắt đầu bằng @@. phải 
     global: availabel across classes. bắt đầu bằng $
     vd : class Customer
     @@no_of_customers = 0
@@ -108,3 +108,25 @@ METHOD :
     alias method-name[tên] method-name[cái được đặt tên]
     alias global-variable-name global-variable-name
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RUBY VARIABLES 
+global ($), instance (@), class (@@), local (lowcase, _)
+
+    CONSTANT : bắt đầu bằng uppercaseletter
+        được khai báo trong class, module thì access local, khai báo ngoài clas/module -> access global 
+    PSEUDO-VARIABLES : local variable, behave like constant. 
+        không thể assign value vô pseudo_variables
+        bao gồm: self, true/false, nil, __FILE__(name of current source file),__LINE__(current line in source file)
+    BASICS LITERALS 
+        + integer number:  -230 to 230-1 or -262 to 262-1 : object của class Fixnum 
+                        :               ngoài             : object của class Bignum
+            khởi đầu    : 0 octal, 0x hex, 0b binary 
+        + floatting number: number có phần lẻ 
+        + string: object của class string. chuỗi byte 
+        + array
+        + hash
+            vd: hsh = colors = { "red" => 0xf00, "green" => 0x0f0, "blue" => 0x00f }
+                hsh.each do |key, value|
+                 print key, " is ", value, "\n"
+                 end #=> red is 3840 ....
+        + range: .. tính luôn số cuối vd 1..5 = 12345
+                 ... bỏ số cuối 
