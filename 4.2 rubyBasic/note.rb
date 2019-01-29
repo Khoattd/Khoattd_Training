@@ -130,3 +130,71 @@ global ($), instance (@), class (@@), local (lowcase, _)
                  end #=> red is 3840 ....
         + range: .. tính luôn số cuối vd 1..5 = 12345
                  ... bỏ số cuối 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RUBY OPERATORS 
+== vs === 
+=== được sử dụng trong mệnh đề when của case 
+
+eql? vs equal? 
+eql check 2 biến bằng cả type và value 
+equal? check object_id
+
+and vs && tương tự cho or và ||
+and có mức ưu tiên thấp hơn cả = 
+vd: foo = :foo
+bar = nil
+
+a = foo and bar # gán a = foo trước, sau đó thực hiện a and bar
+# => nil
+a
+# => :foo
+ 
+a = foo && bar # gán a = kết quả của foo&& bar
+# => nil
+a
+# => nil
+
+a = (foo and bar) #gán a= kết quả của foo and bar
+# => nil
+a
+# => nil
+
+(a = foo) && bar 
+# => nil
+a
+# => :foo
+RUBY IF ELSE :
+nếu viết chung dòng thì phải có then hoặc ;
+vd if
+x = 1
+if x > 2 then puts "x is greater than 2" else puts "I can't guess the number" end
+hoặc code if condition 
+tương tự cho unless 
+CASE WHEN :
+    syntax: case expr0
+                when expr1, expr2
+                    stmt1
+                when expr3, expr4
+                    stmt2
+                else
+                    stmt3
+                end
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RUBY LOOPS 
+WHILE : 
+nếu viết 1 line thì phải có do , \ hoặc ;
+dạn 2: begin 
+            code 
+        end while condition 
+UNTIL : cấu trúc tương tự như WHILE 
+
+FOR :
+for variable [, variable ...] in expression [do]
+    code
+ end
+ vd: for i in 0..5
+            puts "Value of local variable is #{i}"
+    end
+
+
+

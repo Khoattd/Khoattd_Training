@@ -250,7 +250,7 @@ ARRAY
     #=> [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
 
     a = Array.new(2, Hash.new)
-    a[0]['cat'] = 'feline'
+    a[0]['cat'] = 'feline'n
     # => [{"cat"=>"feline"}, {"cat"=>"feline"}
 với cách tạo này, khi thay đổi 1 phần từ của array do nó chứa hash nên các thằng khác đổi theo
     nên sử dụng dạng block để tạo các phần tử khác nhau: 
