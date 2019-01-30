@@ -11,6 +11,8 @@ a +b = a(+b) (a là method)
 naming convention:
 class name: CamelCase
 class constant: ALL UPPERCASE
+method name: bắt đầu bằng lower case 
+ALIAS : bắt đầu bằng $, không được bắt đầu bằng số
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SYNTAX :
     print <<EOF
@@ -137,7 +139,7 @@ global ($), instance (@), class (@@), local (lowcase, _)
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 RUBY OPERATORS 
 == vs === 
-=== được sử dụng trong mệnh đề when của case 
+=== sử dụng để check số có trong range hay không
 
 eql? vs equal? 
 eql check 2 biến bằng cả type và value 
@@ -257,7 +259,7 @@ vd:
      print file, "==", STDIN, "\n"
  có thể rescue rescue 
  begin  
-    # code chạy chính
+    # co
     rescue OneTypeOfException  
     # chạy nếu code chính lỗi với OneTypeOfexpection
     rescue AnotherTypeOfException  

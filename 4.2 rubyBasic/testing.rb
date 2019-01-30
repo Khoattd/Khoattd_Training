@@ -1,5 +1,5 @@
 thêm sau không đổi +
-them sau có đổi <<
+them sau có đổi <<, concat
 thêm trước có đổi : prepend
 them trước không đổi : 
 
@@ -117,3 +117,28 @@ map tạo một array mới với các phần tử là kết quả của block v
 12) nums.sort      
 13) nums.sort.reverse
 14) nums.sort {|x| x %3}
+
+1) status_mapping.each {|key, value| puts "#{key}, #{value}" }
+2)status_mapping.keys
+3) status_mapping.values
+4) status_mapping.key(1)
+5) status_mapping[:declined]
+6)status_mapping.delete(:pending)
+7) status_mapping.detete_if {|key,value| value % 2  + 3 / 700 > 7}
+8) status_mapping.has_key?(:not_response)
+9) status_mapping.has_value?(3)
+10 status_mapping[:not_response] =3
+11){pending: 5, approved: 1, declined: 2,pre_defined: -1}
+    không làm đổi hash đầu
+    begin
+        file = open("/file")
+        if file
+           puts "File opened successfully"
+        end
+     rescue
+           fname="another_name"
+        retry
+     ensure
+        puts "A file Opened successfully"
+     end
+     print file, "==", STDIN, "\n"

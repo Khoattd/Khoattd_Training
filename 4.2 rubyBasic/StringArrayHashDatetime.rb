@@ -27,12 +27,10 @@ RUBY - STRINGS :
         "%05d" % 123                              #=> "00123"
     
     + Str * int: lặp lại str int lần 
-    + Str + str2: gộp str2 vào sau Str 
+    + Str + str2: gộp str2 vào sau Str . không làm đổi chuỗi gốc 
+    + Str << object/integer :append obj vô str , nếu pass integer thì append code point . làm đổi chuỗi gốc 
     + +str -> str(mutable): nếu string frozen, return duplicated mutable string
       -str -> str(frozen): nếu string frozen, trả lại chính nó. nếu ko return forzen string 
-
-    + Str << object/integer :append obj vô str , nếu pass integer thì append code point 
-        vd: a << "world"   #=> "hello world"
     + Str <=> str2: return -1,0,1,nil : so sánh 2 string so chiều dài của Str vs str2 (CASE SENSITIVE)
     + Str == object (object#==) [return true or false]
         nếu object ko phải instance của String nhưng respond to to_string thì so sánh được 
@@ -50,6 +48,7 @@ RUBY - STRINGS :
             + Regexp: /expression/. vd: /\d/ : số từ 0 ts 9 
     + Str[index]/[index,index]/[range]/[regexp]/[regexp,integer/name]/[other_str] = new_str 
             + thay thế content của Str bằng new_str
+            + không làm thay đổi str cũ 
     
     + ascii_only? -> true/false .check string xem có chứa gì ngoài ascii ko 
     + bytes : return array chứa bytes của các ký tự trong string 
@@ -72,7 +71,7 @@ RUBY - STRINGS :
       chop!:
     + chr: return char đầu tiên 
     + clear: empty string 
-    + concat(obj1,obj2): giống + 
+    + concat(obj1,obj2): giống + . làm thay đổi chuỗi gốc
     + count([str2]+) -> integer đếm str2 có trong str, hoặc các ký tự của str 2 có trong str2
     vd : count ("hello","^l") đếm chữ h, e, o, trừ chữ l
         c1-c2: đếm các chữ giữa c1,c2
@@ -318,6 +317,8 @@ METHOD :
     + ar1 + ar2 : gộp 2 array 
     + ar1 - ar2 : bỏ những phần từ có trong ar2 ra khỏi ar1 
     + ar << obj : thêm obj vào chính ar
+    + ar1 | ar2 : lấy các phần tử không trùng nhau của 2 ary taoj thành ary mới
+
     vd: a << "c" << "d" << [ 3, 4 ]
         #=>  [ 1, 2, "c", "d", [ 3, 4 ] ]
     + ar1 <=> ar2 return -1,0,1,nil 
@@ -409,7 +410,6 @@ METHOD :
             [1, 2, 3].zip(a, b)   #=> [[1, 4, 7], [2, 5, 8], [3, 6, 9]]
             [1, 2].zip(a, b)      #=> [[1, 4, 7], [2, 5, 8]]
             a.zip([1, 2], [8])    #=> [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
-    + ar1 | ar2 : lấy các phần tử không trùng nhau của 2 ary taoj thành ary mới
     +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 HASH HASH HASH HASH HASH HASH
     hash là một tập hợn các key và value của nó 
@@ -512,5 +512,8 @@ hash1 > hash2 : ngược lại
         vd: h = { a: 1, b: 2, c: 3 }
             h.transform_keys {|k| k.to_s }  #=> { "a" => 1, "b" => 2, "c" => 3 }
 + values: list value thày aray 
-+ values_at(key )
++ values_at(key)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+DATE AND TIME 
+thêm option rational (hour,24) để  đi trước mốc thời gian hour giờ. thêm negative để đi sau 
 

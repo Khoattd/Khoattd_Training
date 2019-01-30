@@ -1,0 +1,27 @@
+check chẵn lẻ
+each(|x| print x*3 + x)
+nums.each_index(|x| print nums[x]*3 + x)
+nums.join(",")
+
+1) mang1 - mang2
+2) mang1 & mang2
+3) mang1 | mang2
+5) mang1 ==mang 2
+
+
+Question 33)
+
+Cho mảng hybrid = [1, 2, 3, [5, 7, 9], [11, 22], 7]
+
+- Làm sao để tạo ra mảng mới = [1, 2, 3, 5, 7, 9, 11, 22, 7]
+- Làm sao để biến mảng cũ thành [1, 2, 3, 5, 7, 9, 11, 22, 7]
+Answer 
+Word counts: 0 
+   Pallet
+Powered by Savsoft Quiz
+
+
+Cho hash people = {name: "Hai", age: 18}. Cho biết kết quả của từng đoạn chương trình sau
+
+people[:name]
+people["name"]
