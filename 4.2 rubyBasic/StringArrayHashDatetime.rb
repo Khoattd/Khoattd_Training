@@ -410,3 +410,107 @@ METHOD :
             [1, 2].zip(a, b)      #=> [[1, 4, 7], [2, 5, 8]]
             a.zip([1, 2], [8])    #=> [[4, 1, 8], [5, 2, nil], [6, nil, nil]]
     + ar1 | ar2 : lấy các phần tử không trùng nhau của 2 ary taoj thành ary mới
+    +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+HASH HASH HASH HASH HASH HASH
+    hash là một tập hợn các key và value của nó 
+    array vs hash 
+    array sử dụng integer là index  trong khi hash cho p hép sử dụng bất kỳ object nào làm index 
+    grades = { "Jane Doe" => 10, "Jim Doe" => 6 }
+    KEY LÀ SYMBOL: 
+    options = { :font_size => 10, :font_family => "Arial" }
+    options = { font_size: 10, font_family: "Arial" }
+CREATE A NEW HASH 
+grades = Hash.new(0) # tạo hash mới, gán default value là 0 với các key không tồn tại 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+PUBLIC METHOD :
++   new → new_hash 
+    new(obj) → new_hash #OBJECT IS DEFAULT 
+n   ew {|hash, key| block } → new_hash
+VD: h = Hash.new { |hash, key| hash[key] = "Go Fish: #{key}" }
+    h["c"]           #=> "Go Fish: c"
++ hash1 < hash2 -> boolean : check subset  
+hash1 > hash2 : ngược lại 
++ hash1 <= has2 -> boolean : subset hoặc bằng 
++ hash1 == has2 -> bbằng nhau nếu key và value bằng nhau, bất kể thứ tự và vị trí 
++ hsh[key]=value : gán value cho key 
+  hsh.store(key,value) tương tự 
++ any? [{ |(key, value)| block }] → true or false
++ assoc(key) : tìm trong hash, trả kề cặp [key,value]
+  rassoc(obj): trả về thằng cuối cùng match trong hash 
+  DÙNG ĐỂ TÌM CẢ KEY VÀ VALUE
++ clear : xóa sạch hsh 
++ compact -> new_hash : xóa nil values/key, không làm thay đổi hash gốc 
+    thêm option !
++ compare_by_identity -> hsh: 
++ default(value): set default cho các key không tồn tại 
+  default = : tương tự 
++ delete(key) -> value 
+  delete(key) {| key | block } → value
+    vd : h = { "a" => 100, "b" => 200 }
+         h.delete("a")                              #=> 100
+         h.delete("z")                              #=> nil
+         h.delete("z") { |el| "#{el} not found" }   #=> "z not found"
++ delete_if {| key, value | block } → hsh : làm thay đổi hash gốc 
+  delete_if → an_enumerator
+  vd: h.delete_if {|key, value| key >= "b" }   #=> {"a"=>100}
++ dig(key): lấy ra giá trị con của value của key khi value là hash hoặc array 
+        vd:  g = { foo: [10, 11, 12] }
+             g.dig(:foo, 1)              #=> 11
++ each {| key, value | block } → hsh 
+  each_pair {| key, value | block } → hsh
+  each → an_enumerator                                       vd: h.each {|key, value| puts "#{key} is #{value}" }
+  each_pair → an_enumerator 
+ EACH LÀM THAY ĐỔI HSSH CŨ  
+ PASS KEY,VALUE PAIR 
++ each_key :làm thay đổi hash cũ, PASS KEY 
+    VD: h.each_key {|key| puts key }
++ each_value: PASS VALUE, làm thay đổi hash cũ 
++ empty? 
++ eql?(other): trả về true nếu hsh và other có cùng content, không tính thứ tự 
++ fetch(key [, default] ) → obj 
+  fetch(key) {| key | block } → obj
+  trả lại value của key , thêm option default để khi không tìm thấy key 
++ fetch_values(key)-> array: trả lại mảng chứa giá trị của các key 
++ flatten -> array: xếp key, value thành cặp và tạo thành array 
++ has_key?(key) test equality với ==
+  key?(key) tương tự 
+  member?(key)
++ has_value?(value)
++ include?(key) ko test euality với ==
++ invert: tạo hash mới với key và value đảo ngược từ hash cũ. nếu 2 key trùng nhau thì lấy cái sau từ trái sang phải 
++ keep_if:  thay đổi hash cũ, xóa mọi key-value pair 
++ key(value): tìm key của value 
++ keys : trả lại array chứa key 
++ length 
++ merge(other_hash) → new_hash 
+  merge(other_hash){|key, oldval, newval| block} → new_hash
+  KHÔNG LÀM ĐỔI HASH GỐC 
+  nếu key bị duplicate thì lấy value của thằng other_hash 
+    vd: h1 = { "a" => 100, "b" => 200 }
+        h2 = { "b" => 254, "c" => 300 }
+        h1.merge(h2)   #=> {"a"=>100, "b"=>254, "c"=>300}
+        h1.merge(h2){|key, oldval, newval| newval - oldval}
+                   #=> {"a"=>100, "b"=>54,  "c"=>300}
+    thêm option! để làm thay đổi hash gốc 
++ reject:   không làm thay đổi hash gốc
+    h = { "a" => 100, "b" => 200, "c" => 300 }
+    h.reject {|k,v| k < "b"}  #=> {"b" => 200, "c" => 300}
+    thêm option ! để làm thay đổi hash gốc 
++ rehash: build lại hash nếu key gần đây thay đổi 
++ replace(other_hash): thay cả content của hash1 bawgnf other_hash 
++ select: không làm thay đổi hash cũ. chọn ra cặp key value thỏa điều kiện 
+    h = { "a" => 100, "b" => 200, "c" => 300 }
+    h.select {|k,v| k > "a"}  #=> {"b" => 200, "c" => 300}
+    h.select {|k,v| v < 200}  #=> {"a" => 100}
+    thêm option! để  thay đổi hash cũ 
+
++shift: làm thay đổi hash gốc. xóa key-value đầu tiên trong hash r ship 
++ size = length 
++slice(key) trả lại hash mới chứa key và value trong slice 
++ to_a : to array (nested)
++ transform_keys {|key| block } → new_hash: không làm thay đổi hash cũ 
+        vd: h = { a: 1, b: 2, c: 3 }
+            h.transform_keys {|k| k.to_s }  #=> { "a" => 1, "b" => 2, "c" => 3 }
++ values: list value thày aray 
++ values_at(key )
+

@@ -347,3 +347,6 @@ box.freeze
 box.frozen?
 -----------------------------------------------
 CLASS CONSTANT 
+không thể thay đổi value 
+access outside : classname::CONSTANT 
+--------------
