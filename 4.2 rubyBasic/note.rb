@@ -7,6 +7,10 @@ Nhiều function built sẵn
 CASE SENSITIVE
 a + b = a+b (a là local variable)
 a +b = a(+b) (a là method)
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+naming convention:
+class name: CamelCase
+class constant: ALL UPPERCASE
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SYNTAX :
     print <<EOF
@@ -164,11 +168,12 @@ a
 a
 # => :foo
 RUBY IF ELSE :
+RUBY SỬ DỤNG ELSIF CHỨ KO PHẢI ELSE IF  
 nếu viết chung dòng thì phải có then hoặc ;
 vd if
 x = 1
 if x > 2 then puts "x is greater than 2" else puts "I can't guess the number" end
-hoặc code if condition 
+hoặc #code if condition 
 tương tự cho unless 
 CASE WHEN :
     syntax: case expr0
@@ -195,7 +200,150 @@ for variable [, variable ...] in expression [do]
  vd: for i in 0..5
             puts "Value of local variable is #{i}"
     end
-REDO & RETRY 
+REDO (lặp lại most internal loop, có thể gây infinite loop)
+        vd: for i in 0..5
+        if i < 2 then
+           puts "Value of local variable is #{i}"  #=> nó in i = 0 miết 
+           redo
+        end
+     end
+    
+RETRY 
+vd : begin
+        do_something # exception raised
+    rescue
+        # handles error
+    retry  # restart from beginning
+    end
+hoặc làm lại vòng lặp :
+    for i in 1..5
+         retry if some_condition # restart from i == 1
+    end
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+MODULE 
+module dùng để group method, class, constant 
+    + cung cấp namespace tránh nameclash 
+    + mixin facility 
+    + định nghĩa 1 namespace, hoặc sandbox để method hoặc constant không bị đè bởi các cái khác 
+ĐỂ GỌI CONSTANT CỦA MODULE XÀI ModuleName::constantname 
+ vd: module Trig
+         PI = 3.141592654
+        def Trig.sin(x)
+        # ..
+        end
+        def Trig.cos(x)
+            # ..
+        end
+    end
+Method trong module có thể trùng tên.
+sử dụng require tương tự như import, include để xài module ở pfile khác 
+ # đặt $LOAD_PATH << '.' ở đầu để báo search file ở current directory 
+include moduleName #include module trong 1 class 
 
+RUBY KHÔNG HỖ TRỢ MULTIPLE INHERIT, SỬ DỤNG MODULE THAY THẾ GỌI LÀ MIXIN 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EXCEPTION 
+handle error: vd mở 1 file không tồn tại
+vd: 
+    begin
+        file = open("/unexistant_file")
+        if file
+          puts "File opened successfully"
+         end
+    rescue
+       fname = "another_file"
+       retry #chạy lại code 
+    end
+     print file, "==", STDIN, "\n"
+ có thể rescue rescue 
+ begin  
+    # code chạy chính
+    rescue OneTypeOfException  
+    # chạy nếu code chính lỗi với OneTypeOfexpection
+    rescue AnotherTypeOfException  
+    # chạy code với AnotherTypeOfException
+    retry #chạy lại từ begin 
+    else  
+    # chạy nếu không có exception nào 
+    ensure
+    # chắc chắn thằng này chạy
+    end
+-------------------------------------------------------------------------
+raise 
+sử dụng raise để đặt exception, message thông báo khi gặp exception
+vd: raise "error message" 
+    raise ExceptionType, "Error Message"
+    raise ExceptionType, "Error Message" condition
+---------------------------------------------------------
+ensure 
+ensure code block chạy bất cứ khi nào có exception raise 
+else phải đi sau rescue và trước any ensure.
+    ELSE ĐỂ CHẠY CODE KHI KHÔNG BỊ EXCEPTION 
+------------------------------------------------------------------
+CATCH AND THROW 
+CATCH define 1 block code chạy bình thường. 
+nếu gặp throw có cụng block name, symbol thì kết quả chạy của catch sẽ bị hủy 
+vd: 
+def get_number
+    rand(100)
+end
+random_numbers = catch (:random_numbers) do
+result = []
+10.times do
+  num = get_number
+  throw(:random_numbers, []) if num < 10
+  result << num
+end
+result
+end
 
+Ở ví dụ này, nếu không có số nào random ra dưới 10, result sẽ là array chứa kết quả từ đoạn code catch 
+nếu có số random ra dưới 10, thrơ được kích hoạt. refult trả về thành nil
+----------------------------------------------------------
+CLASS EXCEPTION 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+RUBY CLASS 
 
+class Box
+    def initialize(w,h)
+       @width, @height = w, h
+    end
+    # accessor methods
+   def printWidth
+    @width
+ end
+
+ def printHeight
+    @height
+ end
+
+  # setter methods
+  def setWidth=(value)
+    @width = value
+ end
+ def setHeight=(value)
+    @height = value
+ end
+
+ end
+PHẢI CÓ ACCESSOR METHOD THÌ Ở NGOÀI MS ACCESS ĐC VALUE CỦA OBJECT 
+VD box1=Box.new.printWidth
+PHẢI CÓ SETTER METHOD THÌ MỚI SET VALUE ĐƯỢC 
+to_s method : được gọi khi call tên của object 
+vd :  def to_s
+        "(w:#@width,h:#@height)"  # string formatting of the object.
+    end
+    ---------------------------------------------
+OVERRIDDING : thay đổi method được kế thừa từ method cha 
+OVERLOADING : thay đổi +, - , * 
+vd: 
+    def +(other)       # Define + to do vector addition
+        Box.new(@width + other.width, @height + other.height)
+    end
+FREEZING OBJECT : chặn để object không bị thay đổi 
+box = Box.new(10, 20)
+
+box.freeze 
+box.frozen?
+-----------------------------------------------
+CLASS CONSTANT 
