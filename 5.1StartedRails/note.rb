@@ -158,4 +158,37 @@ request hay không. dev mode : false. product,test mode : true
 config.beginning_of_week : set ngày bắt đầu của tuần  
 config.console : set class có thể sử dụng bởi rail.console 
 config.enable_dependency_loading : enables auto loading. kể cả bật cache_classes 
-config.middleware : config middleware của application 
+config.middleware : config middleware của application
+
+
+1) App : chứa các subfolder cấu thành nên hoạt động của application.
+    a) asset chứa các subfolder lưu các chỉnh sửa của javascripts, stylesheets, images 
+        i) images : chứa các images dùng trong app 
+        ii) javascripts: chưá code javascripts
+        iii) stylesheets: chứa các file css style cho app 
+    b) controllers: chứa các file controller của app 
+    c) heplers: chứa các module helper 
+    d) mailers: chứa địa chỉ maill của ng lập trình app 
+    e) models: chứa các models của app 
+    f) views: chứa các file html.erb để định dạng ui cho app 
+2) Config: chứa các file config routes, database... của app 
+    a) application.rb : file config chung của hệ thống 
+    b) database.yml: file config cho database của app
+    c) environments: chứa file config cho từng evironment 
+        i) development: file config cho app trong giai đoạn phát triển 
+        ii) production: file config cho app khi đưa ra người dùng 
+        iii) test : file config của app sử dụng cho test 
+    d) intializers: chứa các file thiết lập khi rails bắt đầu khởi động app 
+    e) locals: chứa các file config cho các khu vực khác nhau trên thế giới 
+    f) routes.rb: file kết nối request cho controllers và actions cụ thể 
+3) Db folder chứa database của app, database schema và database migration 
+    i) migrate: chứa các file khai báo tables của database
+    ii) shcema.rb : file tổng hợp chứa các table của database
+    iii) seeds.rb
+4) gemfile, gemfile.lock: liệt kê các gem và version được sử dụng trong hệ thống. File này 
+được sử dụng bởi Bundler gem 
+5) log) lưu lại thông tin hoạt động phát triển
+6) public. chứa các file và asset có được public 
+7) readme) chứa note hoặc instruction manual
+8) test: chứa unit test của appp 
+9) vendor : chứa code của bên thứ 3
