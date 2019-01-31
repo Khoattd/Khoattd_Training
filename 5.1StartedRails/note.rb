@@ -135,4 +135,27 @@ add has_many: comments trong model article.rb để một article có nhiều co
 SECURITY 
 thêm đầu controller 
 http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
-                                                              only: :delete
+                                                              only: :delete 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CONFIGURATIONS 
+4 chỗ để  thiết lập initialize
+    config/application.rb
+    Environment-specific configuration files VD: config/environments/production.rb
+    Initializers
+    After-initializers
+
+    In the rare event that your application needs to run some code before Rails itself is loaded, 
+    put it above the call to require 'rails/all' in config/application.rb.
+------------------------------------------------
+CONFIGURATION RAILS COMPONENTS 
+GENERAL CONFIGURATIONS 
+config.after_initialize chạy block sau khi Rail init xong app 
+config.after_initialize do
+    ActionView::Base.sanitized_allowed_tags.delete 'div'
+  end
+config.cache_classes : quyết định xem classé và modules của app có nên reload lại sau mỗi 
+request hay không. dev mode : false. product,test mode : true 
+config.beginning_of_week : set ngày bắt đầu của tuần  
+config.console : set class có thể sử dụng bởi rail.console 
+config.enable_dependency_loading : enables auto loading. kể cả bật cache_classes 
+config.middleware : config middleware của application 
