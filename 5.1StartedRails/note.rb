@@ -113,4 +113,26 @@ WORK FLOW :
     <%= render 'form' %>  #lấy file form.html.erb 
      <%= link_to 'Back', articles_path %>
 14) Deleting article 
-
+def destroy
+    @article = Article.find(params[:id])
+    @article.destroy
+   
+    redirect_to articles_path
+  end
+  alert khi destroy:
+   <td><%= link_to 'Destroy', article_path(article),
+    method: :delete,
+    data: { confirm: 'hahahahahah' } %></td>
+15) add second model
+    bin/rails generate model Comment commenter:string body:text article:references
+        option articles: references sẽ tạo một cột trong db article_id làm external_ key cho table comment 
+add has_many: comments trong model article.rb để một article có nhiều comment
+16 ) adđ route cho comments. add relationship cho comment và article :
+    config/routes.rb
+    resources :articles do 
+        resources :comments
+...............
+SECURITY 
+thêm đầu controller 
+http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+                                                              only: :delete
