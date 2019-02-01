@@ -76,3 +76,14 @@ CHANGING EXISTING MIGRATION
   not a good idead 
     tạo extra work cho team nếu một migration đó đã chạy trên production machine rồi 
     chỉ nên thay đổi những migration ở trên máy dev 
+CHÚ Ý 
+khi tạo change database VD: CHANGE COLUMN type 
+ b1) tạo column mới 
+ b2) chuyển data từ column cũ sang column mới 
+ b3) xóa column cũ 
+ ĐÁNH GIÁ HOẠT ĐỘNG CỦA APP TRƯỚC KHI CHANGE DADATABASE 
+
+ Foreign_key : true, false :
+ ràng buộc các bảng ref với nhau. nếu true thì thay đổi khoogn được. vd xóa bảng 
+ INDEX: sử dụng để retreive data, tăng tốc search, queries 
+        hại : làm chậm tốc độ xử lý database. vì index cũng phải input, update... build lại binary tree.
