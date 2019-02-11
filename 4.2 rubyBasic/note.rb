@@ -278,7 +278,7 @@ vd: raise "error message"
     raise ExceptionType, "Error Message" condition
 ---------------------------------------------------------
 ensure 
-ensure code block chạy bất cứ khi nào có exception raise 
+ensure code block luôn luôn chạy nhưng không return 
 else phải đi sau rescue và trước any ensure.
     ELSE ĐỂ CHẠY CODE KHI KHÔNG BỊ EXCEPTION 
 ------------------------------------------------------------------

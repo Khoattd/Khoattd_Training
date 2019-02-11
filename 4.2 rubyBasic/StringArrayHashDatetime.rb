@@ -48,7 +48,7 @@ RUBY - STRINGS :
             + Regexp: /expression/. vd: /\d/ : số từ 0 ts 9 
     + Str[index]/[index,index]/[range]/[regexp]/[regexp,integer/name]/[other_str] = new_str 
             + thay thế content của Str bằng new_str
-            + không làm thay đổi str cũ 
+            + làm thay đổi str cũ 
     
     + ascii_only? -> true/false .check string xem có chứa gì ngoài ascii ko 
     + bytes : return array chứa bytes của các ký tự trong string 
