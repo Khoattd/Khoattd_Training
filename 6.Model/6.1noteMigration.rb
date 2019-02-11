@@ -11,16 +11,16 @@ CREATING A MIGRATION :
 
 
 TẠO TABLE : 
-    If the migration name is of the form "CreateXXX" 
+    If the migration name is of the form "CreateXXXs" 
     and is followed by a list of column names 
     and types then a migration creating the table XXX with the columns listed will be generated. For example:
      vd: 
         rails generate migration CreateProducts name:string part_number:string
          #tạo 1 file trong db/mig chứa def chang create_tables 
 thay đổi table thông qua migrate :  
-    rails generate migration Add[x]To[XXX] 
+    rails generate migration Add[x]To[Xxxs] 
         vd: rails generate migration AddDetailToArticles detail:string
-    rails generate migration Remove[x]To[XXX]
+    rails generate migration Remove[x]From[Xxxs]
         vd: rails generate migration RemoveDetailToArticles detail:string 
 migration refer tới table khác (liên kết - tạo external key)
     vd: rails generate migration AddUserRefToProducts user:references
@@ -59,10 +59,10 @@ Tạo migration :
         change_column :[tables], :[column], :[type]
 
 nếu đã migrate một migration lỗi: 
-    rails db:migrate:rollback [STEP=n]
+    rails db:rollback [STEP=n]
     sau đó fixx migration rồi migrate lại 
     hoặc 
-    rails db:migrate:redo [STEP=]
+    rails db:redo [STEP=]
 SOME MORE COMMAND : 
     Setup database: rails db:setup (create database, load schema, initialize with seed data)
     Reset database: rails db:rest 

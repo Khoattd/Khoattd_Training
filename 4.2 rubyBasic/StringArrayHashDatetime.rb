@@ -129,7 +129,7 @@ RUBY - STRINGS :
        #lấy index của chữ cuối cùng 
          
     + replace(str2) thay str bằng str2 
-    + insert(index, other_str) → str
+    + insert(index, other_str) → str # làm đổi chuỗi gốc 
     + inspect 
     + length 
     + ljust(integer, padstr=' ') → new_str
@@ -264,7 +264,7 @@ ACCESS ARRAY :
     arr.fetch(index)= > lấy ngoài range báo về index error 
     arr.fetch(index,"oops") => lấy ngoài range báo về "oops"
     arr.fisrt/last: lấy thằng đầu / last 
-    arr.take/drop(n): lấy n gía trị đầu/cuối 
+    arr.take/drop(n): lấy/bỏ n gía trị đầu không đổi array gốc 
         .take_while {block}
     arr.values_at(id1,id2) :lấy các giá trị tại các index tương ứng 
     
