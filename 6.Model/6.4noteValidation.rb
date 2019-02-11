@@ -23,7 +23,7 @@ OVERVIEW
         + update_all, _attribut, _column, _columns, _counters
         + save(validate: false)
 VALID? INVALID? 
-    thực hiện validation mà khoogn cần các method trigger validation 
+    thực hiện validation mà không cần các method trigger validation 
     .errors.messages method để xem các errors
     vd:     Person.create(name: "John Doe").valid? # => true
             Person.create(name: nil).valid? # => false
