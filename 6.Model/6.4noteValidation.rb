@@ -93,3 +93,70 @@ COMMON VALIDATION OPTION
 :allow_nil bỏ qua validation nếu value được validate là nil 
 :allow_blank bỏ qua validation nếu value là blank 
 :message specify message được đưua vào error collection khi validation fails 
+:on quyết định khi nào thì validate 
+            vd: on: :create 
+                on: :update 
+    có thể pass custom event vd: on: :account_setup
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CONDITIONAL VALIDATION 
+USING SYMBOL 
+    method của if sẽ được gọi ngay trước khi validate 
+    vd:     
+        class Order < ApplicationRecord
+            validates :card_number, presence: true, if: :paid_with_card?
+            def paid_with_card?
+                payment_type == "card"
+            end
+        end
+USING PROC
+    cho phép viết condition inline thay vì tạo method mới 
+    vd: 
+        class Account < ApplicationRecord
+            validates :password, confirmation: true,
+            unless: Proc.new { |a| a.password.blank? }
+        end
+GROUPING CONDITIONAL VALIDATION 
+    thực hiện nhiều validation với một condition duy nhất 
+    vd: 
+        class User < ApplicationRecord
+            with_options if: :is_admin? do |admin|
+            admin.validates :password, length: { minimum: 10 }
+            admin.validates :email, presence: true
+            end
+        end
+COMBINING VALIDATION CONDITION 
+    sử dụng array trogn if: để  sử dụng multiple condition #if: [epr1,epr2]
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CUSTOM VALIDATION 
+CUSTOM VALIDATOR 
+    là class được kế thừa từ ActiveModel::Validator (hoặc ActiveModel::EachValidator)
+    phải có  def validate(record) (hoặc  def validate_each(record, attribute, value))
+    gọi bằng validates_with [MyValidator]
+        vd:     
+            class MyValidator < ActiveModel::Validator
+                def validate(record)
+                    unless record.name.starts_with? 'X'
+                    record.errors[:name] << 'Need a name starting with X please!'
+                    end
+                end
+            end
+   
+            class Person
+                include ActiveModel::Validations
+                validates_with MyValidator
+            end
+CUSTOM METHOD 
+    có thể tạo method để check state của model và thêm message error 
+    ngay trong class ở file method 
+    gọi bằng validate :[methodName]
+    có thể thêm nhiều method validation, sẽ được chạy theo thứ tự 
+    trong def method phải có errors.add(:[attribute],"message")
+    DEFAULT SẼ CHẠY MỖI KHI THỰC HIỆN VALID? HOẶC SAVE 
+    có thể thêm option :on
+    vd: 
+        class Invoice < ApplicationRecord
+        validate :active_customer, on: :create
+        def active_customer
+            errors.add(:customer_id, "is not active") unless customer.active?
+        end
+        end
