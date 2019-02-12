@@ -68,7 +68,7 @@ Format
 Length 
     check độ dài của attribute values :
     bao gồm: minimum, maximum, in, is 
-    option : too_long, wrong_length, too_short 
+    option : too_long, wrong_length, too_short
             vd: length: { maximum: 1000,too_long: "%{count} is the maximum allowed" }
 Numericality
     chỉ cho phép là số 

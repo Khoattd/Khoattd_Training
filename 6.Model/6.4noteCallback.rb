@@ -95,4 +95,10 @@ TRANSACTION CALLBACKS (after_commit + after_rollback)
  2 callback này chỉ thực hiện khi database changes đã được commit hoặc rollback 
  sử dụng khi active record models cần tương tác với external system không phải là database transaction 
  ??????????????????????????????????????
- 
+ HALTING EXECUTION 
+ queue bao gồm 
+      + registered callback, model validation, database operation 
+      + toàn bộ callback chain được bọc trong transaction 
+      + nếu bất kì callback nào raise exception, excution chain bị halt và Rollback
+      được thực hienj.
+      để stop chain: throw :abort 
