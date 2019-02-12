@@ -72,5 +72,8 @@ HAS_MANY :THROUGH VS HAS_AND_BELONGS_TO_MANY
  has_many :through INDIRECTLY. đặt ở cả 2 phía, through cái trung gian, 
         cái trung gian belongs_to 2 cái kia 
         sử dụng khi cần validation, callback, extra attribute trên thằng trung gian 
-                 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+POLYMORPHIC ASSOCIATIONS 
+1 model có thể belongs_to 1 hoặc nhiều model khác trên 1 association duy nhất 
+vd: 1 picture có thể  belongs_to 1 employee hoặc          
 

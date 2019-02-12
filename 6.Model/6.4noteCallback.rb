@@ -67,6 +67,7 @@ RUNNING CALLBACKS
     save/save!/save(validate: false)
     toggle!
     touch
+    + update_attributes 
     update_attribute/update/update!
     valid?
 SKIPPING CALLBACKS 

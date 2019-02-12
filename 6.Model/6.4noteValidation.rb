@@ -13,6 +13,7 @@ OVERVIEW
         + create,create!
         + save,save!
         + update, update!
+        + update_attributes 
         các method có !(bang version), raise exception nếu record invalid 
         non-bang thì không.save+ update return fals. create return object 
     CÁC METHOD SKIP VALIDATION :
