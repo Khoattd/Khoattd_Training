@@ -67,7 +67,7 @@ RUNNING CALLBACKS
     save/save!/save(validate: false)
     toggle!
     touch
-    + update_attributes 
+    update_attributes 
     update_attribute/update/update!
     valid?
 SKIPPING CALLBACKS 
@@ -75,7 +75,7 @@ SKIPPING CALLBACKS
     decrement/decrement_counter
     delete/delete_all
     increment/increment_counter
-    toggle
+    toggle   
     update_column/_columns/_all/_counters
 ------------------------------------------------------------------------------------------------------------
 CONDITIONAL CALLBACKS 
@@ -94,6 +94,7 @@ CONDITIONAL CALLBACKS
 ------------------------------------------------------------------------------------------------------------
 TRANSACTION CALLBACKS (after_commit + after_rollback)
  2 callback này chỉ thực hiện khi database changes đã được commit hoặc rollback 
+ cả 2 được call khi một model được tạo, update, destroy trong 1 transaction block 
  sử dụng khi active record models cần tương tác với external system không phải là database transaction 
  ??????????????????????????????????????
  HALTING EXECUTION 
@@ -103,3 +104,10 @@ TRANSACTION CALLBACKS (after_commit + after_rollback)
       + nếu bất kì callback nào raise exception, excution chain bị halt và Rollback
       được thực hienj.
       để stop chain: throw :abort 
+
+      after_create_commit
+      after_update_commit
+        2 call back này nếu được gọi trong 1 model thì chỉ chạy last callback, override all others 
+        để gọi callback cho cả 2 create và update xài after_commit
+      after_destroy_commit
+      
