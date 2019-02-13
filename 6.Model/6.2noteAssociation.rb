@@ -261,6 +261,11 @@ CHECK DOES ASSOCIATED OBJECT EXIST
         end
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 HAS_ONE ASSOCIATION REFERENCE 
+    ngược với belongs_to, khi assign cho một has_many association, nó sẽ tự động
+    được save (để update foreign_key của nó). any object bị thay thế sẽ được tự 
+    động save vì nó cũng sẽ đổi foreign_key 
+    Nếu một trong 2 save bị fail do không pass validation, assignment statement
+        return false và bị cancel 
 -----------------------------
 METHOD ADDED 
     association
@@ -271,7 +276,45 @@ METHOD ADDED
     reload_association
     #association được thay bằng tên model được pass vào has_one 
     #tương tự như belongs_to 
-    
+----------------------------
+OPTIONS FOR HAS_ONE 
+    :as
+        set association là polymporphic association 
+    :autosave
+        #tương tự belongs_to
+    :class_name
+        #tương tự belongs_to
+    :dependent
+        control associated object khi this object bị destroy 
+        bao gồm :
+            :destroy destroy luôn thằng con 
+            :delete delete thằng con trực tiếp trong database 
+            :nullify foregin_key set to null, không trigger callback 
+            :restrict_with_exception raise exception nếu tồn tại associated record 
+            :restrict_with_error add error to the owner nếu tồn tạo associated object 
+    :foreign_key
+        #tương tự belongs_to
+    :inverse_of
+        #tương tự belongs_to
+    :primary_key
+        #tương tự belongs_to
+    :source
+        Specifies source association name cho has_one :through association 
+    :source_type
+        sử dụng khi association proceed thông qua polymorphic association 
+    :through
+        specifies model trung gian để perform query 
+    :validate
+        #tương tự belongs_to 
+------------------------
+SCOPES FOR HAS_ONE 
+    #y chang belongs_to 
+-----------------------
+CHECK DOES ASSOCIATED OBJECT EXIST 
+    vd: if @supplier.account.nil?
+             @msg = "No account found for this supplier"
+        end
+
 
 
 
