@@ -266,6 +266,8 @@ HAS_ONE ASSOCIATION REFERENCE
     động save vì nó cũng sẽ đổi foreign_key 
     Nếu một trong 2 save bị fail do không pass validation, assignment statement
         return false và bị cancel 
+    Nếu parent object unsaved, child object sẽ không save. sẽ tự động save khi cả
+        parent được save 
 -----------------------------
 METHOD ADDED 
     association
@@ -314,8 +316,64 @@ CHECK DOES ASSOCIATED OBJECT EXIST
     vd: if @supplier.account.nil?
              @msg = "No account found for this supplier"
         end
-
-
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+HAS_MANY REFERENCES 
+-------------------
+METHOD ADDED
+    collection
+    collection<<(object, ...)
+    collection.delete(object, ...)
+    collection.destroy(object, ...)
+    collection=(objects)
+    collection_singular_ids
+    collection_singular_ids=(ids)
+    collection.clear
+    collection.empty?
+    collection.size
+    collection.find(...)
+    collection.where(...)
+    collection.exists?(...)
+    collection.build(attributes = {}, ...)
+    collection.create(attributes = {})
+    collection.create!(attributes = {})
+    collection.reload 
+#collection được thay bằng class plural pass vào sau has_many 
+#collection_singluar được thay bằng singularized version 
+        vd: 
+            class Author < ApplicationRecord
+            has_many :books
+            end
+        => author.books / author.book_ids 
+    Collection 
+        trả về Relation của tất cả associated objects. nếu ko có return empty relation 
+        vd: @author.books = @books 
+    Collection<<(object,...)
+        thêm 1 hoặc n objects vào collection bằng cách set foreign_key của các object
+        đó bằng primary_key của calling model
+        vd: @author.books << @book1 
+    Collection.delete(object,..)
+        xóa 1 hoặc n object khỏi collection bawgnf cách set foreign_key thành null 
+        vd: @author.books.delete(@book1)
+    Collection.destroy(object,..)
+        xóa 1 hoặc n object khỏi collection bằng cách destroy mỗi object
+        ignore :dependent option 
+    Collection=(objects)
+        làm collection chỉ chứa supplied object. bằng cách add và delete objects. 
+        change đc persist tới database 
+    Collection_singular_ids
+        return array chứa id của các objects trong collection 
+        vd: @author.book_ids = @book_ids 
+    Collection_singular_ids = (ids) 
+        làm collection chỉ chứa các objecst có primary key là các id được đưa vào 
+        change đc persist tới database 
+    Collection.clear 
+        remove all objects khỏi collection theo cách được specified trong :dependent 
+        nếu không có sẽ làm default là set foreign_key to null 
+        với has_many :through là delete_all 
+    Collection.empty? 
+        return true nếu không có associated object nào 
+    Collection.size 
+    Collection.find
 
 
 
