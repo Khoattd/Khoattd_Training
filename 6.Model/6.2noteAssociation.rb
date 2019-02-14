@@ -374,15 +374,110 @@ METHOD ADDED
         return true nếu không có associated object nào 
     Collection.size 
     Collection.find
-
-
-
-
-
-
-
-
-
+        Tìm object trong collection 
+            vd: @author.books.find(1) 
+    Collection.where 
+        Tìm object trong collection với condition được pass vào where. 
+        NHƯNG OBJECT ĐƯỢC LOAD LAZILY (database is queried only when the object 
+        is accessed)
+            vd: @available_books = @author.books.where(available: true) # No query yet
+    Collection.exists?(..) 
+        check object trong collection có pass condition hay không 
+    Collection.build(attribute ={},...)
+        tạo object mới với attribute được pass vào 
+        Tuy nhiên associated object chưa được save
+        vd:  @book = @author.books.build(published_at: Time.now,book_number: "A12345")
+    Collection.create(attributes = {}) 
+        tương tự như build nhưng object sẽ được save vào database 
+    Collection.create! 
+        tương tự như create nhưng raise ActiveRecord::RecordInvalid 
+    Collection.reload 
+        tương tự như belongs_to,has_many 
+-------------------------------------------------------------------
+OPTIONS FOR HAS_MANY 
+    :as
+        xác định đây là polymorphic association 
+    :autosave
+        #tương tự 2 cái trên
+    :class_name
+        #tương tự 2 cái trên
+    :counter_cache
+        #tương tự 2 cái trên 
+    :dependent
+        bao gồm các options :
+            :destroy all associated object cũng bị destroy theo 
+            :delete_all associated object bị delete trực tiếp trong database 
+            :nullify foreign_key set to null. KHÔNG TRIGGER CALLBACK 
+            :restrict_with_exception raise exception nếu có bất kì associated object nào 
+            :restrict_with_error add error to the owner nếu có bất kì associated object nào 
+    :foreign_key
+        #tương tự 2 cái trên
+    :inverse_of
+        #tương tự
+    :primary_key
+        #tương tự 
+    :source
+        #tương tự
+    :source_type
+        #tương tự
+    :THROUGH
+        #tương tự
+    :validate
+        #tương tự 
+-----------------------------------------------------------------
+SCOPE FOR HAS_MANY 
+    sử dụng dể customize query cho has_many 
+    vd:     
+        class Author < ApplicationRecord
+        has_many :books, -> { where processed: true }
+        end
+    BAO GỒM : 
+        where
+            #tương tự 
+        extending
+            specified a named module to extend the association proxy 
+        group
+            supplies an attribute name to group result set by 
+                vd: 
+                    class Author < ApplicationRecord
+                    has_many :line_items, -> { group 'books.id' },
+                                            through: :books
+                    end
+        includes
+            #tương tự 
+        limit
+            set limit cho lượng object được lấy ra từ database 
+                vd:  has_many :recent_books, -> { order('published_at desc').limit(100) },class_name: "Book"
+        offset
+            bỏ qua n object đầu tiên vd: -> {offset(11)} #bỏ qua 11 thằng đầu tiên 
+        order
+            sắp thứ tự cho các object nhận được theo cái gì đó 
+                vd: has_many :books, -> { order "date_confirmed DESC" }
+        readonly
+            set readonly cho associated objet được lấy từ database 
+        select
+            #tương tự 
+        distinct
+            không lấy những thằng duplicate 
+                vd: class Person
+                has_many :readings
+                has_many :articles, -> { distinct }, through: :readings
+              end
+            nếu gán 2 article giống nhau thì nó vẫn tồn tại 2 articles giống nhau. nhưng khi retereive từ Person chỉ 
+            lấy được 1 article 
+              ĐỂ MỖI ARTICLE LÀ UNIQUE, SET COLUMN LÀ UNIQUE: TRUE 
+---------------------------------------------------------------
+WHEN ARE OBJECTS SAVED 
+khi gán 1 object cho 1 quan hệ has_many, object đó sẽ được auto save để update foreign_key của nó. nếu assign 
+multiple object thì multiple object cugnx đc save 
+    vd: khi tạo  b = comment.new thì b chưa đc save vào database 
+        nhưng khi gán a.comments << b thì b sẽ được autosave vào database 
+nếu ko pass validation thì assignment statement return false và cancelled 
+nếu parrent obbject chưa đc save thì child object cũng sẽ ko đc save thì gán. toàn bộ unsaved member sẽ được 
+save vào database khi parent đc save 
+NẾU MUỐN GÁN MÀ KO LƯU VÀO DATABASE SỬ DỤNG COLLECTION.BUILD 
+    
+    
 
 
 
