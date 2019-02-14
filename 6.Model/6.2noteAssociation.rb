@@ -541,6 +541,81 @@ ADDITIONAL COLUMN METHOD
     Collection.exists?(...)
         #tương tự has_many 
     Colleciton.build(attribute={})
-    
+        object sẽ được tạo với passed attribute, link through join table sẽ được tạo, nhưng object chưa save 
+    Collection.create(attribute={}) 
+        sau khi pass all validation trên associated model. associated object sẽ được save
+    Collection.create! 
+        raise exception nếu RecordInvalid
+    Collection.reload 
+        #giống has_many
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+OPTIONS FOR HAS_AND_BELONGS_TO_MANY
+    vd: 
+    class Parts < ApplicationRecord
+      has_and_belongs_to_many :assemblies, -> { readonly },
+                                           autosave: true
+    end
+    BAO GỒM :
+    :association_foreign_key
+        set column name trong join table cho thằng associated object
+        vd:
+            has_and_belongs_to_many :friends,
+            class_name: "User",
+            foreign_key: "this_user_id",
+            association_foreign_key: "other_user_id"
+    :autosave
+        #tương tự 
+    :class_name
+        #tương tự 
+    :foreign_key 
+        #tương tự
+    :join_table
+        #tương tự
+    :validate
+        #tương tự 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SCOPES FOR HAS_AND_BELONGS_TO_MANY
+    vd:
+        has_and_belongs_to_many :assemblies, -> { where active: true }
+    Bao Gồm : 
+        where #tương tự
+        extending #tương tự 
+        group   #tương tự
+        includes #tương tự
+        limit   #tương tự
+        offset  #tương tự 
+        order   #tương tự
+        readonly    #tương tự
+        Select  #tương tự
+        distinct    #tương tự 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+WHEN ARE OBJECST SAVED 
+    khi gán object cho association, object được autosave (Để update join table). multiple objects cũng save hết 
+    nếu 1 cái fail validation thì return false và cancel 
+    nếu parent unsaved thì child sẽ unsaved cho tới khi parent đc save
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ASSOCIATION CALLBACK 
+    Tương tự như các callback thông thường, nhưng được trigger trong life cycle của collection 
+        vd: has_many :books, before_add: :check_credit_limit
+    4 CAllBACK :
+        before_add
+        after_add
+        before_remove 
+        after_remove 
+    Rails sẽ pass object được add  hoặc remove vào callback 
+    có thể stack nhiều callback trong 1 event bằng array  vd: before_add: [:callback1, :callback2]
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ASSOCATION EXTENSION 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SINGLE TABLE INHERITANCE 
+    sử dụng để share field cho các model khác nhau vd: share field color, price cho Car, Motorcycle 
+        nhưng mỗi cái lại có behavior khác nhau, controller khác nhau 
+    vd: 
+        tạo date vehicle có filed type để mark model 
+        $ rails generate model vehicle type:string color:string price:decimal{10.2}
+        tạo các model để sử dụng database vehicle 
+        $ rails generate model car --parent=Vehicle
+            cái này sẽ tạo model: class Car < Vehicle 
+            khi tạo 1 car mới là tạo 1 record trong vehicle với type là car 
 !!!!!!!!!!!!!!!!! khi initialze belongs_to hoặc has_one. nên sử dụng build_prefix để build association thay vì 
 sử dụng .build method (sử dụng cho has_many, has_and_belongs_to_many). tương tự với create
