@@ -480,7 +480,7 @@ NẾU MUỐN GÁN MÀ KO LƯU VÀO DATABASE SỬ DỤNG COLLECTION.BUILD
     
 
 
-
+              
 
 !!!!!!!!!!!!!!!!! khi initialze belongs_to hoặc has_one. nên sử dụng build_prefix để build association thay vì 
 sử dụng .build method (sử dụng cho has_many, has_and_belongs_to_many). tương tự với create
