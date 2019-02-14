@@ -476,11 +476,71 @@ nếu ko pass validation thì assignment statement return false và cancelled
 nếu parrent obbject chưa đc save thì child object cũng sẽ ko đc save thì gán. toàn bộ unsaved member sẽ được 
 save vào database khi parent đc save 
 NẾU MUỐN GÁN MÀ KO LƯU VÀO DATABASE SỬ DỤNG COLLECTION.BUILD 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+HAS_AND_BELONGS_TO_MANY ASSOCIATION REFERENCES  
+    Association này tự tạo join table cho 2 model gồm foreign_key tới mỗi class 
+-----------------------------------
+17 METHOD ADDED 
+    collection
+    collection<<(object, ...)
+    collection.delete(object, ...)
+    collection.destroy(object, ...)
+    collection=(objects)
+    collection_singular_ids
+    collection_singular_ids=(ids)
+    collection.clear
+    collection.empty?
+    collection.size
+    collection.find(...)
+    collection.where(...)
+    collection.exists?(...)
+    collection.build(attributes = {})
+    collection.create(attributes = {})
+    collection.create!(attributes = {})
+    collection.reload
+#collection được thay bằng class plural pass vào sau has_many 
+#collection_singluar được thay bằng singularized version 
+vd: Part has_and_belongs_to_many :assemblies 
+        => part.assemblies | part.assembly_ids
+-------------------------------------
+ADDITIONAL COLUMN METHOD 
+    nếu trong jointable có thêm các cột additional ngoài 2 column chưa foreign_key 
+    các cột đó sẽ được thêm như attribute của các record được retrieve từ quan hệ đó 
+    RECORD ĐƯỢC RETURN VỚI ADDITIONAL ATTRIBUTE LUÔN LUÔN READ-ONLY 
+    KHÔNG NÊN SỬ DỤNG. NẾU MUỐN SỬ DỤNG KIỂU ASSOCIATION COMPLEX NHƯU VẬY THÌ XÀI HAS_MANY :THROUGH 
+---------------------------------------
+    Collection 
+        #tương tự has_many 
+    Collection<<(object,...) 
+        dùng đề gán 
+        #tương tự has_many 
+        !có thể dùng collection.concat và collection.push 
+    Collection.delete(object,..)
+        remove 1 hoặc n objects khỏi collection bằng cách xóa records trong jointable. 
+        KHÔNG DESTROY OBJECT 
+           vd: @part.assemblies.delete(@assembly1)
+    Collection.destroy(object,..)
+        tương tự như delete 
+    Collection=(objecst)
+        #tương tự has_many
+    Collection_singular_ids
+        return array chứa id của objects thuộc collection 
+    Collection_singular_ids=(ids)
+        #tương tự has_many
+        dùng để gán 
+    Collection.clear 
+        remove tất cả object khỏi collection bằng cách xóa rows khỏi join table 
+        KHÔNG DESTROY ASSOCIATED OBJECT 
+    Collection.empty? 
+        return true nếu collection khoogn có associated object nào 
+    Collection.find(...)
+        tìm objects trong collection 
+    Collection.where(...)
+        #tương tự has_many 
+        vd: @new_assemblies = @part.assemblies.where("created_at > ?", 2.days.ago)
+    Collection.exists?(...)
+        #tương tự has_many 
+    Colleciton.build(attribute={})
     
-    
-
-
-              
-
 !!!!!!!!!!!!!!!!! khi initialze belongs_to hoặc has_one. nên sử dụng build_prefix để build association thay vì 
 sử dụng .build method (sử dụng cho has_many, has_and_belongs_to_many). tương tự với create
