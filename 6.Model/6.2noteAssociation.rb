@@ -619,3 +619,38 @@ SINGLE TABLE INHERITANCE
             khi tạo 1 car mới là tạo 1 record trong vehicle với type là car 
 !!!!!!!!!!!!!!!!! khi initialze belongs_to hoặc has_one. nên sử dụng build_prefix để build association thay vì 
 sử dụng .build method (sử dụng cho has_many, has_and_belongs_to_many). tương tự với create
+
+OPTION 
+    SOURCE 
+    class Newsletter
+        has_many :subscriptions
+        has_many :subscribers, :through => :subscriptions, :source => :user
+      end
+    Đổi tên của assocition từ user thành subscribers 
+    nói với rails tìm association user cho tên subscriber 
+    vd thay vì Newsletter.find(id).users 
+    thì Newsletter.find(id).subscribers 
+    SOURCE_TYPE 
+      nếu source tiếp tục là polymorphic association thì phải xài source_type 
+      để rails biết tìm cái nào 
+        vd:   
+        class Tag < ActiveRecord::Base
+            has_many :taggings, :dependent => :destroy
+            has_many :books, :through => :taggings, :source => :taggable, :source_type => "Book"
+            has_many :movies, :through => :taggings, :source => :taggable, :source_type => "Movie"
+        end
+        
+        class Tagging < ActiveRecord::Base
+            belongs_to :taggable, :polymorphic => true
+            belongs_to :tag
+        end
+        
+        class Book < ActiveRecord::Base
+            has_many :taggings, :as => :taggable
+            has_many :tags, :through => :taggings
+        end
+        
+        class Movie < ActiveRecord::Base
+            has_many :taggings, :as => :taggable
+            has_many :tags, :through => :taggings
+        end
