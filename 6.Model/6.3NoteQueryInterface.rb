@@ -144,3 +144,45 @@ ORDERING
         vd: Article.order(:created_at) | .order("created_at") | order("created_at DESC")
     hoặc multiple order ưu tiên sắp xếp theo thứ tự từ trái sang phai 
         vd: Article.order(comments_count: :asc, created_at: :desc) 
+    hoặc Article.order(comments_count: :asc).order(created_at: :desc)
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SELECTING SPECIFIC FIELDs
+    chỉ chọn các field mong muốn thay vì chọn tất cả các field 
+    vd: Article.select(:title,:comments_count)
+    CHÚ Ý. cái này sẽ tạo model chỉ có các field mình lựa. Nếu access field mà mình không lựa sẽ báo ActiveRecord:MissingAttributeErrror 
+    nếu chỉ muốn lấy record với giá trị duy nhất cho mỗi cái đúng trong field 
+    vd: Article.select(:comments_count).distinct
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+LIMIT AND OFFSET 
+    Limit dùng để giới hạn số lượng return object 
+    OFFSet xác định chỗ bắt đầu tìm trong database 
+    VD : Article.limit(5).offset(3) #không lấy thằng số 3 mà lấy thằng số 4 trở đi 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+OVERRIDING CONDITION 
+    Unscope 
+        loại bỏ 1 method nào đó
+       vd: Article.where('id > 10').limit(20).order('id asc').unscope(:order)
+        #loại bỏ không tính method order 
+        Article.where(id: 10, trashed: false).unscope(where: :id)
+        #chỉ thực hiện where(trashed: false)
+    Only
+        Ngược lại với unscope, chỉ thực nhiện những cái trong only
+        vd: Article.where('id > 10').limit(20).order('id desc').only(:order, :where)
+            #chỉ thực hiện order và where, không thực hiện limit 
+    Reorder 
+        thực hiện query theo order khác với order được khai báo trước đó (override nó)
+        class Article < ApplicationRecord
+            has_many :comments, -> { order('posted_at DESC') }
+        end        
+        Article.find(10).comments.reorder('name') #sẽ liệt kê các comments của article_id 10 theo thứ tự name chứ không theo thứ tự posted_at 
+    Reverse_order 
+        làm ngược lại method order nếu có 
+        vd: Client.where("orders_count > 10").order(:name).reverse_order #thực hiện order name desc 
+        Nếu không có order, sẽ thực hiện reverse order cho primary key 
+    Rewhere 
+        Override existing, named where condition
+        vd: Article.where(trashed: true).rewhere(trashed: false)
+        NẾU KHOOGN SỬ DỤNG REWHERE MÀ SỬ DỤNG WHERE NÓ SẼ THỰC HIỆN AND 
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+JOINNING TABLE 
+    Joins 
