@@ -238,4 +238,7 @@ SPECIFYING CONDITIONS ON EAGER LOADED ASSOCIATION
     NẾU MUỐN SỬ DỤNG CÁI NÀY THÌ XÀI WHERE 
         vd: Article.includes(:comments).where(comments: { visible: true })
          #thằng này thực hiện left_outer_join trong khi join thực hiện INNER JOIN 
-         
+         #sử dụng where kiểu này chỉ xài hash đc t hôi không xài string được 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CALCULATION 
+    
