@@ -186,3 +186,7 @@ OVERRIDING CONDITION
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 JOINNING TABLE 
     Joins 
+        String SQL Fragment 
+            vd: Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
+        ARRAY/HASH of Named Association 
+        

@@ -171,7 +171,7 @@ Association=(associate)
     thực hiện bằng cách lấy primary key của thằng author gán cho foreign_key của thằng book
 Build_association
     return new object của associated. thằng object này sẽ được instantiated với passed 
-    attribte. foreign_key của this object sẽ được set 
+    attribute. foreign_key của this object sẽ được set 
     NHƯNG ASSOCIATED OBJECT SẼ CHƯA ĐƯỢC SAVE VÀO DATABASE 
     vd: @author = @book.build_author(author_number: 123,author_name: "John Doe")
             thằng author với 2 attribute sau sẽ được tạo nhưng chưa save vào database 
@@ -676,3 +676,6 @@ OPTION
             has_many :taggings, :as => :taggable
             has_many :tags, :through => :taggings
         end
+CHÚ Ý 
+    CLASS_NAME CHỈ CÓ THỂ DÙNG ĐỂ ĐỔI TÊN ASSOCIATION TRỰC TIẾP 
+    ĐỐI VỚI ASSOCIATION THROUGH THÌ PHẢI DÙNG SOURCE + SOURCE_TYPE
