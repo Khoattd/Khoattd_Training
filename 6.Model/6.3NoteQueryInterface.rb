@@ -189,4 +189,23 @@ JOINNING TABLE
         String SQL Fragment 
             vd: Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
         ARRAY/HASH of Named Association 
+            thực hiện inner joins trong SQL 
+            vd: Article.joins(:comment)
+           #SELECT "articles".* FROM "articles" INNER JOIN "comments" ON "comments"."article_id" = "articles"."id" 
+           #tạo 1 bảng joins giữa article và comment
+        Join Multiple Association : 
+            vd: Article.joins(:category, :comments)
+            # category has_many Article, Article has_many comment
+            JOIN NESTED ASSOCIATION (SINGLE LEVEL)
+                VD: Article.joins(comments: :guest)
+                #Article hass_many comments, Comment has_many guests 
+                #return all articles that have a comment made by a guest
+            JOINS NESSTER ASSOCAITON (MULTIPLE LEVEL)
+                Category.joins(articles: [{ comments: :guest }, :tags])
+                #return all categories that have articles, where those articles have a comment made by a guest, and where those articles also have a tag.
+        SPECIFYING CONDITION ON THE JOINED TABLES
+            có thể specify condition trên join table sử dụng ARRAY hoặc String condition. Hash condition cung cấp 1 syntax đặc biệt để specifying conditions 
+                vd: time_range = (Time.now.midnight - 1.day)..Time.now.midnight
+                    Client.joins(:orders).where('orders.created_at' => time_range)\
+    LEFT_OUTER_JOINS 
         
