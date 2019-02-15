@@ -89,6 +89,10 @@ vd: 1 picture có thể  belongs_to 1 employee hoặc  1 product thông qua symb
     class Product < ApplicationRecord
         has_many :pictures, as: :imageable
     end       
+PHẢI TẠO MIGRATION ADD CỘT INTEGER imageable_id VÀ CỘT STRING   imageble_type. 
+    CỘT TYPE CHỨA TYPE LÀ EMPLOYE HOẶC PICTURE 
+HOẶC THAY 2 COLUMN BẰNG     
+    t.references :imageable, polymorphic: true, index: true
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SELF JOINS 
     có quan hệ với chính nó
@@ -100,12 +104,30 @@ SELF JOINS
             belongs_to :manager, class_name: "Employee"
         end
     ta có thể retrive @employee.subordiates và @employee.manager
+TRONG MIGRATION,   ADD REFERENCES COLUMN CHO CHÍNH NÓ 
+        vd: create_table :emlpoyees do |t|
+                t.references :manager, index: true 
+                t.timestamp 
+        end 
+
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 TIPS, TRICKS, WARNINGS 
     phải tự tạo migration thay đổi theo association trong model 
         + tạo foreign_key cho association belongs_to 
         + tạo join table cho has_and_belongs_to_many
     CHÚ Ý TỚI SCOPE CỦA CLASS APPLICATION RECORD KHI TẠO CLASS TRONG MODULE  
+--------------------------------------------------------
+:UPDATE :SCHEMA 
+    phải tự maintain database schema 
+    :belongs_to 
+        phải tạo foreign_key cho model đó 
+            vd: t.references :author | add_references :books, :author 
+    :has_and_belongs_to_many 
+        phải tạo một join table 
+        JOIN TABLE KHÔNG ĐƯỢC CÓ PRIMARY KEY VÀ ADD INDEX TỚI CẢ 2 CỘT CỦA TABLE 
+            VD:  create_table :assemblies_parts, id: false do |t| 
+                VÀ: add_index :assemblies_parts, :assembly_id 
+        Nếu khoogn muốn thì cài create_join_table thôi được rồi 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 BI-DIRECTIONAL APPLICATION
  khi 2 model có 2 association với nhau vd : has_many - belongs_to
