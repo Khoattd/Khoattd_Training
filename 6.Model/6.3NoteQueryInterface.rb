@@ -208,4 +208,34 @@ JOINNING TABLE
                 vd: time_range = (Time.now.midnight - 1.day)..Time.now.midnight
                     Client.joins(:orders).where('orders.created_at' => time_range)\
     LEFT_OUTER_JOINS 
-        
+        vd: Author.left_outer_joins(:posts).distinct.select('authors.*, COUNT(posts.*) AS posts_count').group('authors.id')
+        "return all authors with their count of posts, whether or not they have any posts at all"
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+EAGER LOADING ASSOCIATION 
+    mechanism dùng để load associated record của object được return bởi model.find sử dụng ít queries nhất có thể
+    N+1 QUERY PROBLEM 
+        clients = Client.limit(10)
+        clients.each do |client|
+        puts client.address.postcode
+        end 
+        #cái này tìm 10 client rồi in ra posscode. 
+        # bao gồm 1 query là find rồi query cho 10 cái client để load .
+    SOLUTION TO N+1 QUERY PROBLEM 
+        thay bawgnf clients = Client.includes(:address).limit(10)
+        lúc này khi find client được load rồi thì address cũng được load theo 
+        #lúc này chỉ thực 2 query là find client và find address in (1,2,3,..10)
+-------------------------
+EAGER LOADING MULTIPLE ASSOCIATIONS 
+    SỬ DỤNG ARRAY 
+        VD: Article.includes(:category, :comments)
+            #Thằng này load tất cả các category và comment được associate với article 
+    SỬ DỤNG HASH 
+        vd: Category.includes(articles: [{ comments: :guest }, :tags]).find(1)
+        #lấy category id 1, load articcles, tags được associated với articles, tất cả guest được associated với comments 
+--------------------------
+SPECIFYING CONDITIONS ON EAGER LOADED ASSOCIATION 
+    NÊN SỬ DỤNG JOIN HAY VÌ CÁI NÀY 
+    NẾU MUỐN SỬ DỤNG CÁI NÀY THÌ XÀI WHERE 
+        vd: Article.includes(:comments).where(comments: { visible: true })
+         #thằng này thực hiện left_outer_join trong khi join thực hiện INNER JOIN 
+         

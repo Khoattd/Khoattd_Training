@@ -650,6 +650,7 @@ OPTION
       end
     Đổi tên của assocition từ user thành subscribers 
     nói với rails tìm association user cho tên subscriber 
+    #nghĩa là vô trong thằng subscriptions tìm user để lấy subscriber
     vd thay vì Newsletter.find(id).users 
     thì Newsletter.find(id).subscribers 
     SOURCE_TYPE 
