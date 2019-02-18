@@ -306,3 +306,49 @@ EXISTACE OF OBJECT
         Client.exists?(id: [1,2,3]) #chỉ cần 1 cái đúng là return true
         Client.joins(:address).where("addresses.location"=>"united state").exsist?
     Có thể dụng dụng .any?, .many?
+------------------------------
+CALCULATION 
+    count 
+        vd: Client.count #SELECT COUNT(*) FROM "client"
+            Client.where(orders_count: 4).count
+             # # SELECT COUNT(*) FROM clients WHERE (orders_count: 4)
+    average
+        vd: Client.average(:orders_count) 
+        #  SELECT AVG("clients"."orders_count") FROM "clients"
+    tương tự cho minimum,maximum,sum
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+SCOPE 
+    LUÔN LUÔN RETURN ACTIVE RECORD RELATION 
+        vd: 
+            class Article < ApplicationRecord
+            scope :published, -> { where(published: true) }
+            end
+        Có thể có nhiều scope 1 lúc 
+    PASSING IN ARGUMENT
+        vd:
+            class Article < ApplicationRecord
+                scope :created_before, ->(time) { where("created_at < ?", time) }
+            end
+            call :  Article.created_before(Time.zone.now)
+    USING CONDITIONAL 
+        vd: 
+            class Article < ApplicationRecord
+                scope :created_before, ->(time) { where("created_at < ?", time) if time.present? }
+            end
+    APPLYING A DEFAULT SCOPE 
+            default_scope { where("removed_at IS NULL") }
+            Khi queries được thực hiện trên model: SELECT * FROM clients WHERE removed_at IS NULL
+    Merging Of Scopes 
+        vd:
+            class User < ApplicationRecord
+                scope :active, -> { where state: 'active' }
+                scope :inactive, -> { where state: 'inactive' }
+            end
+            User.active.inactive
+            # SELECT "users".* FROM "users" WHERE "users"."state" = 'active' AND "users"."state" = 'inactive'
+            User.active.where(state: 'finished')
+            # SELECT users.(*) FROM users WHERE users.state= "active" AND users.state= "inactive"
+        !!! Nếu có default_scope thì default scope luôn được prepend trước scope và where condition 
+    REMOVING ALL SCOPING
+        #useful khi default scope không áp dụng cho query nào đó
+        Client.unscope.load  | Clietn.unscope
