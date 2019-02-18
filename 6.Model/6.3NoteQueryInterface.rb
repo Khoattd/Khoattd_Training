@@ -221,10 +221,12 @@ JOINNING TABLE
            #tạo 1 bảng joins giữa catagory và article 
         Join Multiple Association : 
             vd: Article.joins(:category, :comments)
+            INNER JOIN 2 LẦN 
             # category has_many Article, Article has_many comment
             JOIN NESTED ASSOCIATION (SINGLE LEVEL)
                 VD: Article.joins(comments: :guest)
-                INNER JOIN 2 LẦN 
+                INNER JOIN comments ON comments.article_id = articles.id
+                INNER JOIN guests ON guests.comment_id = comments.id
                 #Article hass_many comments, Comment has_many guests 
                 #return all articles that have a comment made by a guest
             JOINS NESSTER ASSOCAITON (MULTIPLE LEVEL)
@@ -267,5 +269,40 @@ SPECIFYING CONDITIONS ON EAGER LOADED ASSOCIATION
          #thằng này thực hiện left_outer_join trong khi join thực hiện INNER JOIN 
          #sử dụng where kiểu này chỉ xài hash đc t hôi không xài string được 
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-CALCULATION 
-    
+FINDING BY SQL 
+    find_by_sql return object 
+    vd: 
+    Client.find_by_sql("SELECT * FROM clients
+      INNER JOIN orders ON clients.id = orders.client_id
+      ORDER BY clients.created_at desc")
+--------------------------
+    select_all
+        return activeRecord::result
+        giống find_by_sql nhưng không instantiate nó 
+        vd:  a = Client.connection.select_all("SELECT * FROM clients
+        INNER JOIN orders ON clients.id = orders.client_id WHERE orders.item = 20
+       ")
+        NẾU MUỐN TRẢ VỀ OBJECT THÌ THÊM .to_hash 
+    pluck 
+        trả về array chứa giá trị cuar cột được chọn trong pluck vd: 
+        Client.where(orders_count: 4).pluck(:name)
+         #=> ["elephant","name3"]
+            SELECT name FROM clients WHERE orders_count = 4
+        Client.distinct.pluck(:name)
+            SELECT DISTINCT name FROM clients 
+        Client.pluck(:id, :name)       
+        #=> [[1,"Tran thanh dan khoa"],[2,"elephant"]
+!!!!!! Theo sau pluck không thế có thêm scope, trước thì được 
+!!!!!! không thể override method 
+    ids 
+        dạng ngắn của pluck(:id)
+------------------------------
+EXISTACE OF OBJECT 
+    sử dụng .exists? để check object có tồn tại hay không 
+    RETURN TRUE/FALSE 
+    thực hiện query giống find nhưng thay vì trả object thì trả boolean
+        Client.exists?(1) | Client.exists?(orders_count: 4)
+        Client.where(orders_count: 4).exists?
+        Client.exists?(id: [1,2,3]) #chỉ cần 1 cái đúng là return true
+        Client.joins(:address).where("addresses.location"=>"united state").exsist?
+    Có thể dụng dụng .any?, .many?
