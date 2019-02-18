@@ -50,6 +50,9 @@ RETRIEVING A SINGLE OBJECT
                 clients = Client.find([1,10])
         Raise ActiveRecord::RecordNotFound nếu không có matching record.
         Trong trường hợp tìm nhiều object, chỉ cần 1 object không tìm th ấy cũng raise exception 
+        SELECT * FROM clients WHERE (clients.id = 10) LIMIT 1
+        SELECT * FROM clients WHERE (clients.id IN (1,10))
+
     take 
         retrieve object tới thứ tự implicit (ẩn ?)
         return nil nếu không tìm được record 
@@ -57,19 +60,23 @@ RETRIEVING A SINGLE OBJECT
         KẾT QUẢ DỰA VÀO DATABASE ENGINE  
             vd: client = Client.take 
                 client = Client.take(3)
+                SELECT * FROM clients LIMIT 1
     first 
         tìm record theo thứ tự của primary_key.
         nếu trước first có order thì sẽ tìm theo order trước đó 
         return nil nếu không tìm được record, KHÔNG RAISE EXCEPTION, MUỐN RAISE XÀI FIRST!
             vd: Comment.first | Comment.first(3)
                 Comment.order("created_at").find(3) 
+                SELECT * FROM clients ORDER BY clients.id ASC LIMIT 1
     last 
         đảo của first, tìm từ dưới lên
+        SELECT * FROM clients ORDER BY clients.id DESC LIMIT 1
     find_by 
         tìm first record match condition 
         return nill, không raise exception. nếu muốn raise exception xài find_by!
             vd: Comment.find_by body: "wwwwww"
                 #tương tự comment.where(body: "wwwwww").take 
+         SELECT * FROM clients WHERE (clients.first_name = 'Lifo') LIMIT 1
 ------------------------------------------------
 RETRIEVING MULTIPLE OBJECT IN BATCHES 
     batch: gom 1 tập các record rồi xử lý thay vì xử lý cả database 1 lúc như bình thường 
@@ -104,7 +111,8 @@ RETRIEVING MULTIPLE OBJECT IN BATCHES
         CÓ CÙNG OPTION VỚI FIND_EACH 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 CONDITIONS 
-    method WHERE cho phép pass codition để giới hạn records được return 
+    method WHERE cho phép pass codition để giới hạn records được return
+    RETURN ACTIVERECORD RELATION  
 --------------------
 PURE STRING CONDITON 
     vd: Article.where("comments_count='3'")
@@ -114,7 +122,8 @@ ARRAY CONDITION
         Client.where("orders_count = ? AND locked = ?", params[:orders], false)
     first agument sẽ được xem là condition string, các additional argument phía sau sẽ được thay vào ?
 !!!!! được highly perfer hơn pure string  (Client.where("orders_count = #{params[:orders]}")) 
-    Place_holder Conditions 
+    SELECT * FROM clients WHERE (clients.locked = 1)
+Place_holder Conditions 
     thay ? bằng key trong conditions string cho dễ đọc hơn 
         vd: Client.where("created_at >= :start_date AND created_at <= :end_date",
         {start_date: params[:start_date], end_date: params[:end_date]})
@@ -127,33 +136,47 @@ HASH CONDITIONS
     Range Conditions 
         vd: Client.where(created_at: (Time.now.midnight - 1.day)..Time.now.midnight)
             Article.where(comments_count: 2..3)
+            SELECT * FROM clients WHERE (clients.created_at BETWEEN '2008-12-21 00:00:00' AND '2008-12-22 00:00:00')
         sử dụng BETWEEN SQL statement 
+    
     Subset Conditions 
         sử dụng IN SQL statement 
         vd: Client.where(orders_count: [1,3,5])
             Article.where(comments_count: [nill,3])
+            SELECT * FROM clients WHERE (clients.orders_count IN (1,3,5))
+            
     NOT Conditions 
         có thể thực hiện bằng where.not 
+        Thằng naỳ không đếm nil 
         vd: Client.where.not(locked:true)
+        SELECT * FROM clients WHERE (clients.locked != 1)
+
     OR Condition 
         Client.where(locked: true).or(Client.where(orders_count: [1,3,5]))
         sẽ return các client có locker: true hoặc các client có orders_count là 1 3 5
+        SELECT * FROM clients WHERE (clients.locked = 1 OR clients.orders_count IN (1,3,5))
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ORDERING 
+    Return ACTIVE RECORD RELATION
     sử dụng để retrieve records từ database theo order nhất định, sử dụng order method 
         vd: Article.order(:created_at) | .order("created_at") | order("created_at DESC")
     hoặc multiple order ưu tiên sắp xếp theo thứ tự từ trái sang phai 
         vd: Article.order(comments_count: :asc, created_at: :desc) 
     hoặc Article.order(comments_count: :asc).order(created_at: :desc)
+    SELECT * FROM clients ORDER BY orders_count ASC, created_at DESC
 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 SELECTING SPECIFIC FIELDs
+    RETURN ACTIVE RECORD RELATION 
     chỉ chọn các field mong muốn thay vì chọn tất cả các field 
     vd: Article.select(:title,:comments_count)
+    SELECT title, comments_count FROM articles
     CHÚ Ý. cái này sẽ tạo model chỉ có các field mình lựa. Nếu access field mà mình không lựa sẽ báo ActiveRecord:MissingAttributeErrror 
     nếu chỉ muốn lấy record với giá trị duy nhất cho mỗi cái đúng trong field 
     vd: Article.select(:comments_count).distinct
+    SELECT DISTINCT comments_count FROM articles
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 LIMIT AND OFFSET 
+    RETURN ACTIVE RECORD RELATION 
     Limit dùng để giới hạn số lượng return object 
     OFFSet xác định chỗ bắt đầu tìm trong database 
     VD : Article.limit(5).offset(3) #không lấy thằng số 3 mà lấy thằng số 4 trở đi 
@@ -162,6 +185,7 @@ OVERRIDING CONDITION
     Unscope 
         loại bỏ 1 method nào đó
        vd: Article.where('id > 10').limit(20).order('id asc').unscope(:order)
+       SELECT * FROM articles WHERE id > 10 LIMIT 20
         #loại bỏ không tính method order 
         Article.where(id: 10, trashed: false).unscope(where: :id)
         #chỉ thực hiện where(trashed: false)
@@ -182,22 +206,25 @@ OVERRIDING CONDITION
     Rewhere 
         Override existing, named where condition
         vd: Article.where(trashed: true).rewhere(trashed: false)
+        
         NẾU KHOOGN SỬ DỤNG REWHERE MÀ SỬ DỤNG WHERE NÓ SẼ THỰC HIỆN AND 
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 JOINNING TABLE 
     Joins 
+        RETURN ACTIVE RECORD RELATION 
         String SQL Fragment 
             vd: Author.joins("INNER JOIN posts ON posts.author_id = authors.id AND posts.published = 't'")
         ARRAY/HASH of Named Association 
             thực hiện inner joins trong SQL 
-            vd: Article.joins(:comment)
-           #SELECT "articles".* FROM "articles" INNER JOIN "comments" ON "comments"."article_id" = "articles"."id" 
-           #tạo 1 bảng joins giữa article và comment
+            vd: Category.joins(:articles)
+            SELECT categories.* FROM categories INNER JOIN articles ON articles.category_id = categories.id
+           #tạo 1 bảng joins giữa catagory và article 
         Join Multiple Association : 
             vd: Article.joins(:category, :comments)
             # category has_many Article, Article has_many comment
             JOIN NESTED ASSOCIATION (SINGLE LEVEL)
                 VD: Article.joins(comments: :guest)
+                INNER JOIN 2 LẦN 
                 #Article hass_many comments, Comment has_many guests 
                 #return all articles that have a comment made by a guest
             JOINS NESSTER ASSOCAITON (MULTIPLE LEVEL)
