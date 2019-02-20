@@ -42,3 +42,18 @@ DEFINING MULTIPLE RESOURCES AT THE SAME TIME
 vd:  resources :photos, :books, :videos
 ----------------------------------------
 SINGULAR RESOURCES 
+    chỉ show referered id chứ không show toàn bộ 
+    vd: chỉ show currently loged user   get 'profile', to: 'users#show'
+    get 'profile', action: :show, controller: 'users' 
+    #sử dụng symbol thay vì users#show 
+    resourceful route: 
+    resource :geocoder
+    resolve('Geocoder') { [:geocoder] }
+    generate routes tương tự ở trên nhưng path sẽ là singular của geocoder 
+    !!! nếu có cả resources :photos và resource :photo thì tạo cả 2 singular và plural routes trên cùng 1 controller là PhotosController
+    SINGULAR RESOURCES HELPERS : 
+        new_geocoder_path returns /geocoder/new
+        edit_geocoder_path returns /geocoder/edit
+        geocoder_path returns /geocoder
+--------------------------------------
+CREATING PATHS AND URLS FROM OBJECTS 
