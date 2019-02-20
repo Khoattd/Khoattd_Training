@@ -172,4 +172,40 @@ SHALLOW NESTING
         end
         resources :comments, only: [:show, :edit, :update, :destroy]
     lúc này, sử dụng shallow: option để rút gọn đoạn code ở trên 
-    
+    vd: 
+    resources :articles do
+        resources :comments, shallow: true
+      end
+    HOẶC :
+        resources :articles, shallow: true do
+            resources :comments
+            resources :quotes
+        end
+    HOẶC : #tạo théo scope với do 
+        shallow do
+            resources :articles do
+            resources :comments
+            resources :quotes
+            resources :drafts
+            end
+        end
+    thêm scope shallow_path: "sekret" do #thêm tên cho path
+        scope shallow_prefix: "sekret" do # thêm tên cho helper
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+CONTROLLER NAMESPACES AND ROUTING 
+        VD: namespace :admin do
+            resources :articles, :comments
+        end
+    thêm path kiểu /admin/articles
+        có n nhiều kiểu thêm namespace. 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+USING ROOT 
+    root chỉ nhật GET action 
+    dùng để set route cho '/'
+    nên để root ở trên cùng file. là route quan trọng nhất nên match đầu tiên 
+    có thể sử dụng root trong scope và namespaces 
+    .......
+
+    root to: 'pages#main'
+    root 'pages#main' # shortcut for the above
+
